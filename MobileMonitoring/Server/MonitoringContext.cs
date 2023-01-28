@@ -111,5 +111,6 @@ namespace MobileMonitoring.Server
                 AlertCreationDate = new DateTime(2017, 6, 7, 12, 56, 0),
                 IdAlertType = AlertTypes[0].IdAlertType
             });
+        }
     }
 }
