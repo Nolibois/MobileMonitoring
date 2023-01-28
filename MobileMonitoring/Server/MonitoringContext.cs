@@ -1,5 +1,4 @@
 ﻿using MobileMonitoring.Shared;
-using System.Xml.Linq;
 
 namespace MobileMonitoring.Server
 {
@@ -12,7 +11,7 @@ namespace MobileMonitoring.Server
         public List<AlertType>      AlertTypes      {get; } = new();
         public List<Cleanup>        Cleanups        {get; } = new();
         public List<Tile>           Tiles           {get; } = new();
-        public List<Module>         Modules         {get; } = new();
+        public List<ModuleDynamics> ModulesDynamics {get; } = new();
 
         public void Initialize()
         {
@@ -111,6 +110,51 @@ namespace MobileMonitoring.Server
                 AlertCreationDate = new DateTime(2017, 6, 7, 12, 56, 0),
                 IdAlertType = AlertTypes[0].IdAlertType
             });
+
+            /*
+             * Tiles
+             */
+            Tiles.Add(new Tile()
+            {
+                Name = "Notifications cleanup",
+                Number = 15,
+                Alert = false,
+                idModule = ModulesDynamics[0].IdModule
+            });            
+            Tiles.Add(new Tile()
+            {
+                Name = "Cleanup batch history custom",
+                Number = 1.5,
+                Alert = true,
+                idModule = ModulesDynamics[1].IdModule
+            });            
+            Tiles.Add(new Tile()
+            {
+                Name = "Database Cleanup",
+                Number = 735.6,
+                Alert = false,
+                idModule = ModulesDynamics[2].IdModule
+            });            
+            Tiles.Add(new Tile()
+            {
+                Name = "Unsent emails",
+                Alert = false,
+                idModule = ModulesDynamics[3].IdModule
+            });            
+            Tiles.Add(new Tile()
+            {
+                Name = "Due Number sequences",
+                Alert = false,
+                idModule = ModulesDynamics[4].IdModule
+            });
+
+            /*
+             * ModulesDynamics
+             */
+            ModulesDynamics.Add(new ModuleDynamics() { Name = "System administration" });
+            ModulesDynamics.Add(new ModuleDynamics() { Name = "Unsent emails" });
+            ModulesDynamics.Add(new ModuleDynamics() { Name = "Due Number sequences" });
+
         }
     }
 }
