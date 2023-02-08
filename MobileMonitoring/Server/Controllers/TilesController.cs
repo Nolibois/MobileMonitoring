@@ -10,6 +10,6 @@ namespace MobileMonitoring.Server.Controllers
     public class TilesController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<Tile> Get([FromServices] MonitoringContext monitCont) => monitCont.Tiles;
+        public IEnumerable<TileDto> Get([FromServices] MonitoringContext monitCont) => monitCont.Tiles.Select(tile => new TileDto(tile));
     }
 }

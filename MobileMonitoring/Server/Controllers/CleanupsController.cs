@@ -9,6 +9,6 @@ namespace MobileMonitoring.Server.Controllers
     public class CleanupsController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<Cleanup> Get([FromServices] MonitoringContext monitCont) => monitCont.Cleanups;
+        public IEnumerable<CleanupDto> Get([FromServices] MonitoringContext monitCont) => monitCont.Cleanups.Select(cleanup => new CleanupDto(cleanup));
     }
 }

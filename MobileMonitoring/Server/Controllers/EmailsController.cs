@@ -9,6 +9,6 @@ namespace MobileMonitoring.Server.Controllers
     public class EmailsController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<Email> Get([FromServices] MonitoringContext monitCont) => monitCont.Emails;
+        public IEnumerable<EmailDto> Get([FromServices] MonitoringContext monitCont) => monitCont.Emails.Select(email => new EmailDto(email));
     }
 }

@@ -9,7 +9,7 @@ namespace MobileMonitoring.Server.Controllers
     public class UsersController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<User> Get([FromServices] MonitoringContext monitCont) => monitCont.Users;
+        public IEnumerable<UserDto> Get([FromServices] MonitoringContext monitCont) => monitCont.Users.Select(user => new UserDto(user));
 
     }
 }
