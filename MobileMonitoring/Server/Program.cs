@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using MobileMonitoring.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddSingleton(services =>
+{
+    var monitCont = new MonitoringContext();
+    monitCont.Initialize();
+    return monitCont;
+});
 
 var app = builder.Build();
 
