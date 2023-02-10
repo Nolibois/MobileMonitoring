@@ -8,6 +8,11 @@ namespace MobileMonitoring.Server.Controllers
     [ApiController]
     public class EmailStatusesController : ControllerBase
     {
+        /// <summary>
+        /// Get all email status
+        /// </summary>
+        /// <param name="monitCont"></param>
+        /// <returns>List of email status</returns>
         [HttpGet]
         public IEnumerable<EmailStatus> Get([FromServices] MonitoringContext monitCont) => monitCont.EmailStatuses;
     }

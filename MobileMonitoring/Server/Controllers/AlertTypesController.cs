@@ -8,6 +8,11 @@ namespace MobileMonitoring.Server.Controllers
     [ApiController]
     public class AlertTypesController : ControllerBase
     {
+        /// <summary>
+        /// Get All AlertType
+        /// </summary>
+        /// <param name="monitCont"></param>
+        /// <returns>List of Alert type</returns>
         [HttpGet]
         public IEnumerable<AlertType> Get([FromServices] MonitoringContext monitCont) => monitCont.AlertTypes;
     }

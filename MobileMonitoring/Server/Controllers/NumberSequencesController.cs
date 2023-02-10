@@ -8,6 +8,11 @@ namespace MobileMonitoring.Server.Controllers
     [ApiController]
     public class NumberSequencesController : ControllerBase
     {
+        /// <summary>
+        /// Get all Number Sequences
+        /// </summary>
+        /// <param name="monitCont"></param>
+        /// <returns>List of Number Sequences</returns>
         [HttpGet]
         public IEnumerable<NumberSequence> Get([FromServices] MonitoringContext monitCont) => monitCont.NumberSequences;
     }

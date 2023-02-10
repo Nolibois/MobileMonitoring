@@ -8,6 +8,12 @@ namespace MobileMonitoring.Server.Controllers
     [ApiController]
     public class CompaniesController : ControllerBase
     {
+
+        /// <summary>
+        /// Get all companies
+        /// </summary>
+        /// <param name="monitCont"></param>
+        /// <returns>List of companies</returns>
         [HttpGet]
         public IEnumerable<Company> Get([FromServices] MonitoringContext monitCont) => monitCont.Companies;
 

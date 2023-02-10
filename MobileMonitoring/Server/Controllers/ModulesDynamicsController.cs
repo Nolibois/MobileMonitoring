@@ -8,6 +8,11 @@ namespace MobileMonitoring.Server.Controllers
     [ApiController]
     public class ModulesDynamicsController : ControllerBase
     {
+        /// <summary>
+        /// Get all Modules Dynamics
+        /// </summary>
+        /// <param name="monitCont"></param>
+        /// <returns>List of Modules Dynamics</returns>
         [HttpGet]
         public IEnumerable<ModuleDynamics> Get([FromServices] MonitoringContext monitCont) => monitCont.ModulesDynamics;
     }
