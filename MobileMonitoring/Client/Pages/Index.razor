@@ -1,4 +1,7 @@
 ﻿@page "/"
+@using MobileMonitoring.Shared;
+
+@inject HttpClient Http;
 
 <PageTitle>Dashboard Monitoring</PageTitle>
 
@@ -7,67 +10,34 @@
 </div>
 
 <div class="row">
-    <div class="card text-bg-primary mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Notifications: 15M</p>
+    @if(tiles is null)
+    {
+        <div>
+            <p>No data to show</p>
         </div>
-        <div class="card-footer border-0">Notifications cleanup</div>
-    </div>
-
-    <div class="card text-bg-danger mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Cleanup Batch History Custom: 15M</p>
-        </div>
-        <div class="card-footer border-0">Cleanup Batch History Custom</div>
-    </div>
-
-    <div class="card text-bg-primary mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Database Cleanup: 735.6K</p>
-        </div>
-        <div class="card-footer border-0">Database Cleanup</div>
-    </div>
-
-    <div class="card text-bg-primary mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Notifications: 15M</p>
-        </div>
-        <div class="card-footer border-0">Notifications cleanup</div>
-    </div>
-
-    <div class="card text-bg-primary mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Cleanup Batch History Custom: 15M</p>
-        </div>
-        <div class="card-footer border-0">Cleanup Batch History Custom</div>
-    </div>
-
-    <div class="card text-bg-primary mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Database Cleanup: 735.6K</p>
-        </div>
-        <div class="card-footer border-0">Database Cleanup</div>
-    </div>
-
-    <div class="card text-bg-primary mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Notifications: 15M</p>
-        </div>
-        <div class="card-footer border-0">Notifications cleanup</div>
-    </div>
-
-    <div class="card text-bg-primary mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Cleanup Batch History Custom: 15M</p>
-        </div>
-        <div class="card-footer border-0">Cleanup Batch History Custom</div>
-    </div>
-
-    <div class="card text-bg-danger mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Database Cleanup: 735.6K</p>
-        </div>
-        <div class="card-footer border-0">Database Cleanup</div>
-    </div>
+    }
+    else
+    {
+        @foreach(TileDto tile in tiles)
+        {
+            <div class="card text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
+                <div class="card-body">
+                    <p class="card-text">@tile.Number K</p>
+                </div>
+                <div class="card-footer border-0">@tile.Name</div>
+            </div>
+        }
+        
+    }
+    
 </div>
 
+@code
+{
+    private IEnumerable<TileDto>? tiles = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
+    }
+}

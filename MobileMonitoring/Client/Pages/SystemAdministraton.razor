@@ -1,4 +1,7 @@
-﻿@page "/SystemAdministration"
+﻿@page "/SystemAdministration";
+@using MobileMonitoring.Shared;
+
+@inject HttpClient Http;
 
 <PageTitle>System administration</PageTitle>
 
@@ -11,69 +14,83 @@
 </div>
 
 <div class="row">
-    <div class="card text-bg-primary mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Notifications: 15M</p>
+    @if(tiles is null)
+    {
+        <div>
+            <p>No data to show...</p>
         </div>
-        <div class="card-footer border-0">Notifications cleanup</div>
-    </div>
-
-    <div class="card text-bg-danger mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Cleanup Batch History Custom: 15M</p>
-        </div>
-        <div class="card-footer border-0">Cleanup Batch History Custom</div>
-    </div>
-
-    <div class="card text-bg-primary mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-        <div class="card-body">
-            <p class="card-text">KPI Database Cleanup: 735.6K</p>
-        </div>
-        <div class="card-footer border-0">Database Cleanup</div>
-    </div>
+    }
+    else
+    {
+        @foreach(TileDto tile in tiles)
+        {
+            if (tile.ModuleDynamics == "System administration")
+            {
+                <div class="card text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
+                    <div class="card-body">
+                        <p class="card-text">@tile.Number K</p>
+                    </div>
+                    <div class="card-footer border-0">@tile.Name</div>
+                </div>
+            }
+            
+        }
+    }
 </div>
 
 <div class="table-group">
     <h3 class="h4">Notifications cleanup</h3>
     <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Id User</th>
-                    <th scope="col">Full Name</th>
-                    <th scope="col">Company</th>
-                    <th scope="col">Cleanup Date</th>
-                    <th scope="col">Alert creation Date</th>
-                    <th scope="col">Alerts</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">987654</th>
-                    <td>Claire Kennedy</td>
-                    <td>DAT</td>
-                    <td>18/03/2022</td>
-                    <td>01/01/2019</td>
-                    <td>Workflow</td>
-                </tr>
-                <tr>
-                    <th scope="row">987321</th>
-                    <td>Shannon Dascher</td>
-                    <td>USMF</td>
-                    <td>25/02/2022</td>
-                    <td>17/11/2018</td>
-                    <td>Alerts</td>
-                </tr>
-                <tr>
-                    <th scope="row">654321</th>
-                    <td>Kevin Cook</td>
-                    <td>USRT</td>
-                    <td>31/10/2021</td>
-                    <td>21/07/2017</td>
-                    <td>Alerts</td>
-                </tr>
-            </tbody>
-        </table>
+        @if(cleanups is null)
+        {
+            <div>
+                <p>No Notifications data to publish</p>
+            </div>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id Cleanup</th>
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Company</th>
+                        <th scope="col">Cleanup Date</th>
+                        <th scope="col">Alert creation Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(CleanupDto cleanup in cleanups)
+                    {
+                        if (cleanup.AlertType == "Notifications")
+                        {
+                            <tr>
+                                <th scope="row">@cleanup.IdCleanup</th>
+                                <td>@cleanup.User</td>
+                                <td>@cleanup.Company</td>
+                                <td>@cleanup.CleanupDate</td>
+                                <td>@cleanup.AlertCreationDate</td>
+                            </tr>
+                        }
+                        
+                    }
+                </tbody>
+            </table>
+        }
+
     </div>
 </div>
 
+@code
+{
+    private IEnumerable<TileDto>? tiles = null;
+    private IEnumerable<CleanupDto>? cleanups = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.WhenAll(
+            Task.Run(async() => tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles")),
+            Task.Run(async() => cleanups = await Http.GetFromJsonAsync<IEnumerable<CleanupDto>>("api/Cleanups"))
+        );
+    }   
+}

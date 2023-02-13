@@ -83,7 +83,7 @@ namespace MobileMonitoring.Server
             /*
              * AlertTypes
              */
-            AlertTypes.Add(new AlertType() { Name = "Notification" });
+            AlertTypes.Add(new AlertType() { Name = "Notifications" });
             AlertTypes.Add(new AlertType() { Name = "Batch history custom" });
             AlertTypes.Add(new AlertType() { Name = "Batch database" });
 
@@ -92,6 +92,7 @@ namespace MobileMonitoring.Server
              */
             Cleanups.Add(new Cleanup()
             {
+                IdCleanup = 00001,
                 User = Users[0],
                 CleanupDate = new DateTime(2022, 10, 5, 11, 24, 15),
                 AlertCreationDate = new DateTime(2015, 8, 4, 0, 56, 0),
@@ -99,6 +100,7 @@ namespace MobileMonitoring.Server
             });
             Cleanups.Add(new Cleanup()
             {
+                IdCleanup = 00002,
                 User = Users[1],
                 CleanupDate = new DateTime(2021, 4, 14, 1, 12, 0),
                 AlertCreationDate = new DateTime(2014, 3, 28, 9, 42, 0),
@@ -106,6 +108,7 @@ namespace MobileMonitoring.Server
             });
             Cleanups.Add(new Cleanup()
             {
+                IdCleanup = 00003,
                 User = Users[2],
                 CleanupDate = new DateTime(2023, 12, 31, 11, 55, 15),
                 AlertCreationDate = new DateTime(2017, 6, 7, 12, 56, 0),
@@ -132,7 +135,7 @@ namespace MobileMonitoring.Server
             Tiles.Add(new Tile()
             {
                 Name = "Cleanup batch history custom",
-                Number = 1.5,
+                Number = 25,
                 Alert = true,
                 ModuleDynamics = ModulesDynamics[0]
             });            
@@ -146,7 +149,8 @@ namespace MobileMonitoring.Server
             Tiles.Add(new Tile()
             {
                 Name = "Unsent emails",
-                Alert = false,
+                Number = 452,
+                Alert = true,
                 ModuleDynamics = ModulesDynamics[1]
             });            
             Tiles.Add(new Tile()
