@@ -13,10 +13,12 @@ namespace MobileMonitoring.Shared
 
         public required DateTime CleanupDate { get; set; }
         public required DateTime AlertCreationDate { get; set; }
-        public required AlertType AlertType { get; set; }
 
         #region Populated by EF Core
-        public required User User { get; set; }
+        #pragma warning disable CS8618 // Non-nullable field is uninitialized
+        public virtual User User { get; set; }
+        public virtual AlertType AlertType { get; set; }
+        #pragma warning restore CS8618
         #endregion
     }
 }

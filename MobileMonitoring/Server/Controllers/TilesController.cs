@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MobileMonitoring.Shared;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,6 +16,9 @@ namespace MobileMonitoring.Server.Controllers
         /// <param name="monitCont"></param>
         /// <returns>List of tiles with module dynamics name</returns>
         [HttpGet]
-        public IEnumerable<TileDto> Get([FromServices] MonitoringContext monitCont) => monitCont.Tiles.Select(tile => new TileDto(tile));
+        public IEnumerable<TileDto> Get([FromServices] MonitoringContext monitCont) => 
+            monitCont.Tiles
+                .Include(tile => tile.ModuleDynamics)
+                .Select(tile => new TileDto(tile));
     }
 }

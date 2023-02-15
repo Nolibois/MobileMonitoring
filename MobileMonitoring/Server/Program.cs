@@ -1,10 +1,16 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using MobileMonitoring.Server;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<MonitoringContext>(
+    options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    )
+);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -15,13 +21,6 @@ builder.Services.AddSwaggerGen(c =>
         AppContext.BaseDirectory,
         $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"
     ));
-});
-
-builder.Services.AddSingleton(services =>
-{
-    var monitCont = new MonitoringContext();
-    monitCont.Initialize();
-    return monitCont;
 });
 
 var app = builder.Build();

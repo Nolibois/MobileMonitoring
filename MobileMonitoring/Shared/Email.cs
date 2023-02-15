@@ -18,9 +18,11 @@ namespace MobileMonitoring.Shared
         public required DateTime CreationDate { get; set; }
 
         #region Populated by EF Core
-        public required User UserSender { get; set; }
-        public required User UserReceiver { get; set; }
-        public required EmailStatus EmailStatus { get; set; }
+        #pragma warning disable CS8618 // Non-nullable field is uninitialized
+        public virtual User UserSender { get; set; }
+        public virtual User UserReceiver { get; set; }
+        public virtual EmailStatus EmailStatus { get; set; }
+        #pragma warning restore CS8618
         #endregion
     }
 }

@@ -26,24 +26,24 @@
         {
             if (tile.ModuleDynamics == "System administration")
             {
-                <div class="card text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
+                <button @onclick="@(e => ChangeAlertType(tile.Name))" class="card text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
                     <div class="card-body">
                         <p class="card-text">@tile.Number K</p>
                     </div>
                     <div class="card-footer border-0">@tile.Name</div>
-                </div>
+                </button>
             }
         }
     }
 </div>
 
 <div class="table-group">
-    <h3 class="h4">Notifications cleanup</h3>
+    <h3 class="h4">@alertType</h3>
     <div class="table-responsive">
         @if(cleanups is null)
         {
             <div>
-                <p>No Notifications data to publish</p>
+                <p>No @alertType data to publish</p>
             </div>
         }
         else
@@ -61,7 +61,7 @@
                 <tbody>
                     @foreach(CleanupDto cleanup in cleanups)
                     {
-                        if (cleanup.AlertType == "Notifications")
+                        if (cleanup.AlertType == @alertType)
                         {
                             <tr>
                                 <th scope="row">@cleanup.IdCleanup</th>
@@ -83,11 +83,18 @@
     private IEnumerable<TileDto>? tiles = null;
     private IEnumerable<CleanupDto>? cleanups = null;
 
+    private string alertType = "Notifications";
+
     protected override async Task OnInitializedAsync()
     {
         await Task.WhenAll(
             Task.Run(async() => tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles")),
             Task.Run(async() => cleanups = await Http.GetFromJsonAsync<IEnumerable<CleanupDto>>("api/Cleanups"))
         );
-    }   
+    }
+
+    protected void ChangeAlertType(string newType = "Notifications")
+    {
+        alertType = newType;
+    }
 }
