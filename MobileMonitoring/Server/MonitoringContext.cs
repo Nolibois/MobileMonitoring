@@ -111,17 +111,20 @@ namespace MobileMonitoring.Server
             modelBuilder.Entity<Email>()
                 .HasOne(email => email.UserSender)
                 .WithMany()
-                .HasForeignKey(email => email.UserSenderId);
+                .HasForeignKey(email => email.UserSenderId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Email>()
                 .HasOne(email => email.UserReceiver)
                 .WithMany()
-                .HasForeignKey(email => email.UserReceiverId);
+                .HasForeignKey(email => email.UserReceiverId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Email>()
                 .HasOne(email => email.EmailStatus)
                 .WithMany()
-                .HasForeignKey(email => email.EmailStatusId);
+                .HasForeignKey(email => email.EmailStatusId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             /*
@@ -144,6 +147,7 @@ namespace MobileMonitoring.Server
                     CleanupDate = new DateTime(2022, 10, 5, 11, 24, 15),
                     AlertCreationDate = new DateTime(2015, 8, 4, 0, 56, 0),
                     UserId = 1,
+                    TileId = 1,
                     AlertTypeId = 1
                 },
                 new Cleanup()
@@ -152,6 +156,7 @@ namespace MobileMonitoring.Server
                     CleanupDate = new DateTime(2021, 4, 14, 1, 12, 0),
                     AlertCreationDate = new DateTime(2014, 3, 28, 9, 42, 0),
                     UserId = 2,
+                    TileId = 2,
                     AlertTypeId = 2
                 },
                 new Cleanup()
@@ -160,6 +165,7 @@ namespace MobileMonitoring.Server
                     CleanupDate = new DateTime(2023, 12, 31, 11, 55, 15),
                     AlertCreationDate = new DateTime(2017, 6, 7, 12, 56, 0),
                     UserId = 3,
+                    TileId = 3,
                     AlertTypeId = 3
                 }
             );
@@ -172,6 +178,11 @@ namespace MobileMonitoring.Server
                 .HasOne(cleanup => cleanup.AlertType)
                 .WithMany()
                 .HasForeignKey(cleanup => cleanup.AlertTypeId);
+
+            modelBuilder.Entity<Cleanup>()
+                .HasOne(cleanup => cleanup.Tile)
+                .WithMany()
+                .HasForeignKey(cleanup => cleanup.TileId);
 
 
             /*
@@ -194,7 +205,7 @@ namespace MobileMonitoring.Server
                     Name = "Notifications cleanup",
                     Number = 15,
                     Alert = false,
-                    ModuleDynamicsId = 1
+                    ModuleDynamicsId = 1,
                 },
                 new Tile()
                 {
@@ -202,7 +213,7 @@ namespace MobileMonitoring.Server
                     Name = "Cleanup batch history custom",
                     Number = 25,
                     Alert = true,
-                    ModuleDynamicsId = 1
+                    ModuleDynamicsId = 1,
                 },
                 new Tile()
                 {
@@ -210,7 +221,7 @@ namespace MobileMonitoring.Server
                     Name = "Database Cleanup",
                     Number = 735.6,
                     Alert = false,
-                    ModuleDynamicsId = 1
+                    ModuleDynamicsId = 1,
                 },
                 new Tile()
                 {

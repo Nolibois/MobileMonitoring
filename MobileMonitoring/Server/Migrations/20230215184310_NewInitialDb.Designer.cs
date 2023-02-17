@@ -12,8 +12,8 @@ using MobileMonitoring.Server;
 namespace MobileMonitoring.Server.Migrations
 {
     [DbContext(typeof(MonitoringContext))]
-    [Migration("20230215130420_IntialDb")]
-    partial class IntialDb
+    [Migration("20230215184310_NewInitialDb")]
+    partial class NewInitialDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,12 +77,17 @@ namespace MobileMonitoring.Server.Migrations
                     b.Property<DateTime>("CleanupDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("TileId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("IdCleanup");
 
                     b.HasIndex("AlertTypeId");
+
+                    b.HasIndex("TileId");
 
                     b.HasIndex("UserId");
 
@@ -95,6 +100,7 @@ namespace MobileMonitoring.Server.Migrations
                             AlertCreationDate = new DateTime(2015, 8, 4, 0, 56, 0, 0, DateTimeKind.Unspecified),
                             AlertTypeId = 1,
                             CleanupDate = new DateTime(2022, 10, 5, 11, 24, 15, 0, DateTimeKind.Unspecified),
+                            TileId = 1,
                             UserId = 1
                         },
                         new
@@ -103,6 +109,7 @@ namespace MobileMonitoring.Server.Migrations
                             AlertCreationDate = new DateTime(2014, 3, 28, 9, 42, 0, 0, DateTimeKind.Unspecified),
                             AlertTypeId = 2,
                             CleanupDate = new DateTime(2021, 4, 14, 1, 12, 0, 0, DateTimeKind.Unspecified),
+                            TileId = 2,
                             UserId = 2
                         },
                         new
@@ -111,6 +118,7 @@ namespace MobileMonitoring.Server.Migrations
                             AlertCreationDate = new DateTime(2017, 6, 7, 12, 56, 0, 0, DateTimeKind.Unspecified),
                             AlertTypeId = 3,
                             CleanupDate = new DateTime(2023, 12, 31, 11, 55, 15, 0, DateTimeKind.Unspecified),
+                            TileId = 3,
                             UserId = 3
                         });
                 });
@@ -189,7 +197,7 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdEmail = 1,
-                            CreationDate = new DateTime(2023, 2, 15, 14, 4, 20, 566, DateTimeKind.Local).AddTicks(9825),
+                            CreationDate = new DateTime(2023, 2, 15, 19, 43, 10, 283, DateTimeKind.Local).AddTicks(3720),
                             EmailStatusId = 1,
                             Subject = "Review task KJB000012",
                             UserReceiverId = 2,
@@ -209,7 +217,7 @@ namespace MobileMonitoring.Server.Migrations
                             IdEmail = 3,
                             CreationDate = new DateTime(2019, 2, 17, 20, 15, 43, 0, DateTimeKind.Unspecified),
                             EmailStatusId = 3,
-                            Subject = "What's that Task KJB000012 ??",
+                            Subject = "What's taht Task KJB000012 ??",
                             UserReceiverId = 3,
                             UserSenderId = 1
                         });
@@ -475,6 +483,12 @@ namespace MobileMonitoring.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MobileMonitoring.Shared.Tile", "Tile")
+                        .WithMany()
+                        .HasForeignKey("TileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MobileMonitoring.Shared.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -482,6 +496,8 @@ namespace MobileMonitoring.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("AlertType");
+
+                    b.Navigation("Tile");
 
                     b.Navigation("User");
                 });

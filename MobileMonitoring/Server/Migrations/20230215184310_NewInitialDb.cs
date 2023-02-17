@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MobileMonitoring.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class IntialDb : Migration
+    public partial class NewInitialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -131,34 +131,6 @@ namespace MobileMonitoring.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cleanups",
-                columns: table => new
-                {
-                    IdCleanup = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    AlertTypeId = table.Column<int>(type: "int", nullable: false),
-                    CleanupDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AlertCreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cleanups", x => x.IdCleanup);
-                    table.ForeignKey(
-                        name: "FK_Cleanups_AlertTypes_AlertTypeId",
-                        column: x => x.AlertTypeId,
-                        principalTable: "AlertTypes",
-                        principalColumn: "IdAlertType",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Cleanups_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "IdUser",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Emails",
                 columns: table => new
                 {
@@ -188,6 +160,41 @@ namespace MobileMonitoring.Server.Migrations
                         column: x => x.UserSenderId,
                         principalTable: "Users",
                         principalColumn: "IdUser");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cleanups",
+                columns: table => new
+                {
+                    IdCleanup = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TileId = table.Column<int>(type: "int", nullable: false),
+                    AlertTypeId = table.Column<int>(type: "int", nullable: false),
+                    CleanupDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AlertCreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cleanups", x => x.IdCleanup);
+                    table.ForeignKey(
+                        name: "FK_Cleanups_AlertTypes_AlertTypeId",
+                        column: x => x.AlertTypeId,
+                        principalTable: "AlertTypes",
+                        principalColumn: "IdAlertType",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cleanups_Tiles_TileId",
+                        column: x => x.TileId,
+                        principalTable: "Tiles",
+                        principalColumn: "IdTile",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cleanups_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "IdUser",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -265,12 +272,12 @@ namespace MobileMonitoring.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "Cleanups",
-                columns: new[] { "IdCleanup", "AlertCreationDate", "AlertTypeId", "CleanupDate", "UserId" },
+                columns: new[] { "IdCleanup", "AlertCreationDate", "AlertTypeId", "CleanupDate", "TileId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2015, 8, 4, 0, 56, 0, 0, DateTimeKind.Unspecified), 1, new DateTime(2022, 10, 5, 11, 24, 15, 0, DateTimeKind.Unspecified), 1 },
-                    { 2, new DateTime(2014, 3, 28, 9, 42, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2021, 4, 14, 1, 12, 0, 0, DateTimeKind.Unspecified), 2 },
-                    { 3, new DateTime(2017, 6, 7, 12, 56, 0, 0, DateTimeKind.Unspecified), 3, new DateTime(2023, 12, 31, 11, 55, 15, 0, DateTimeKind.Unspecified), 3 }
+                    { 1, new DateTime(2015, 8, 4, 0, 56, 0, 0, DateTimeKind.Unspecified), 1, new DateTime(2022, 10, 5, 11, 24, 15, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 2, new DateTime(2014, 3, 28, 9, 42, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2021, 4, 14, 1, 12, 0, 0, DateTimeKind.Unspecified), 2, 2 },
+                    { 3, new DateTime(2017, 6, 7, 12, 56, 0, 0, DateTimeKind.Unspecified), 3, new DateTime(2023, 12, 31, 11, 55, 15, 0, DateTimeKind.Unspecified), 3, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -278,15 +285,20 @@ namespace MobileMonitoring.Server.Migrations
                 columns: new[] { "IdEmail", "CreationDate", "EmailStatusId", "Subject", "UserReceiverId", "UserSenderId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 2, 15, 14, 4, 20, 566, DateTimeKind.Local).AddTicks(9825), 1, "Review task KJB000012", 2, 1 },
+                    { 1, new DateTime(2023, 2, 15, 19, 43, 10, 283, DateTimeKind.Local).AddTicks(3720), 1, "Review task KJB000012", 2, 1 },
                     { 2, new DateTime(2018, 12, 27, 8, 0, 0, 0, DateTimeKind.Unspecified), 2, "FR:Review task KJB000012", 1, 2 },
-                    { 3, new DateTime(2019, 2, 17, 20, 15, 43, 0, DateTimeKind.Unspecified), 3, "What's that Task KJB000012 ??", 3, 1 }
+                    { 3, new DateTime(2019, 2, 17, 20, 15, 43, 0, DateTimeKind.Unspecified), 3, "What's taht Task KJB000012 ??", 3, 1 }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cleanups_AlertTypeId",
                 table: "Cleanups",
                 column: "AlertTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cleanups_TileId",
+                table: "Cleanups",
+                column: "TileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cleanups_UserId",
@@ -337,10 +349,10 @@ namespace MobileMonitoring.Server.Migrations
                 name: "NumberSequences");
 
             migrationBuilder.DropTable(
-                name: "Tiles");
+                name: "AlertTypes");
 
             migrationBuilder.DropTable(
-                name: "AlertTypes");
+                name: "Tiles");
 
             migrationBuilder.DropTable(
                 name: "EmailStatuses");

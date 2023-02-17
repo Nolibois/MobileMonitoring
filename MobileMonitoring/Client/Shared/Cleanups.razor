@@ -1,0 +1,58 @@
+﻿@using MobileMonitoring.Shared;
+@inject HttpClient Http;
+
+
+<h3 class="h4">@TileName</h3>
+<div class="table-responsive">
+    @if (cleanups is null)
+    {
+        <div>
+            <p>No @TileName data to publish</p>
+        </div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id Cleanup</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Cleanup Date</th>
+                    <th scope="col">Alert creation Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (CleanupDto cleanup in cleanups)
+                {
+                    <tr>
+                        <th scope="row">@cleanup.IdCleanup</th>
+                        <td>@cleanup.User</td>
+                        <td>@cleanup.Company</td>
+                        <td>@cleanup.CleanupDate</td>
+                        <td>@cleanup.AlertCreationDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+
+@code {
+    private IEnumerable<CleanupDto>? cleanups = null;
+
+    [Parameter]
+    public int TileId { get; set; }
+
+    [Parameter]
+    public string TileName { get; set; } = "Notifications Cleanup";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        cleanups = await Http.GetFromJsonAsync<IEnumerable<CleanupDto>>($"api/Cleanups/{TileId}");
+
+        await base.OnParametersSetAsync();
+    }
+
+}

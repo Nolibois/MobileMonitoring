@@ -16,7 +16,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "Portail API" , Version ="v1"});
+    c.SwaggerDoc("v1", new() { Title = "Portail API", Version = "v1" });
     c.IncludeXmlComments(Path.Combine(
         AppContext.BaseDirectory,
         $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"

@@ -2,6 +2,8 @@
 @using MobileMonitoring.Shared;
 
 @inject HttpClient Http;
+@inject NavigationManager Nav;
+
 
 <PageTitle>System administration</PageTitle>
 
@@ -26,7 +28,11 @@
         {
             if (tile.ModuleDynamics == "System administration")
             {
-                <button @onclick="@(e => ChangeAlertType(tile.Name))" class="card text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
+                <button 
+                    @onclick="@(e => SelectedTile(tile))"
+                    class="card text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3" 
+                    style="width: 12rem; height: 12rem;">
+
                     <div class="card-body">
                         <p class="card-text">@tile.Number K</p>
                     </div>
@@ -38,63 +44,25 @@
 </div>
 
 <div class="table-group">
-    <h3 class="h4">@alertType</h3>
-    <div class="table-responsive">
-        @if(cleanups is null)
-        {
-            <div>
-                <p>No @alertType data to publish</p>
-            </div>
-        }
-        else
-        {
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Id Cleanup</th>
-                        <th scope="col">Full Name</th>
-                        <th scope="col">Company</th>
-                        <th scope="col">Cleanup Date</th>
-                        <th scope="col">Alert creation Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach(CleanupDto cleanup in cleanups)
-                    {
-                        if (cleanup.AlertType == @alertType)
-                        {
-                            <tr>
-                                <th scope="row">@cleanup.IdCleanup</th>
-                                <td>@cleanup.User</td>
-                                <td>@cleanup.Company</td>
-                                <td>@cleanup.CleanupDate</td>
-                                <td>@cleanup.AlertCreationDate</td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        }
-    </div>
+    <Cleanups TileId="@TileId" TileName="@TileName"/>
 </div>
+
 
 @code
 {
     private IEnumerable<TileDto>? tiles = null;
-    private IEnumerable<CleanupDto>? cleanups = null;
 
-    private string alertType = "Notifications";
+    public string TileName = "Notifications Cleanup";
+    public int TileId { get; set; } = 1;
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.WhenAll(
-            Task.Run(async() => tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles")),
-            Task.Run(async() => cleanups = await Http.GetFromJsonAsync<IEnumerable<CleanupDto>>("api/Cleanups"))
-        );
+        tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
     }
 
-    protected void ChangeAlertType(string newType = "Notifications")
+    protected void SelectedTile(TileDto tile)
     {
-        alertType = newType;
+        TileName = tile.Name;
+        TileId = tile.IdTile;
     }
 }
