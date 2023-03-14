@@ -9,7 +9,7 @@
     <h1 class="h2 FocOnNav">Dashboard Monitoring</h1>
 </div>
 
-<div class="row">
+<div class="row nav-item">
     @if(tiles is null)
     {
         <div>
@@ -20,12 +20,23 @@
     {
         @foreach(TileDto tile in tiles)
         {
-            <div class="card text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
-                <div class="card-body">
-                    <p class="card-text">@tile.Number K</p>
-                </div>
-                <div class="card-footer border-0">@tile.Name</div>
-            </div>
+            <NavLink class="nav-link" href="@module" style="width: max-content;">
+                <button @onclick="@(e => SelectedModule(tile))" 
+                    class="card text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3" style="width: 12rem; height: 12rem;">
+                        <div class="card-body">
+                            <p class="card-text">@if (tile.Number != null)
+                                {
+                                    @(tile.Number + "K");
+                                }
+                                else
+                                {
+                                    @("N/A");
+                                }
+                            </p>
+                        </div>
+                        <div class="card-footer border-0">@tile.Name</div>
+                </button>
+            </NavLink>
         }
         
     }
@@ -35,9 +46,15 @@
 @code
 {
     private IEnumerable<TileDto>? tiles = null;
+    private string module = "/";
 
     protected override async Task OnInitializedAsync()
     {
         tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
+    }
+
+    protected void SelectedModule(TileDto tile)
+    {
+        module = tile.ModuleDynamics.Replace(" ", "");
     }
 }

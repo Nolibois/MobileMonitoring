@@ -34,7 +34,16 @@
                     style="width: 12rem; height: 12rem;">
 
                     <div class="card-body">
-                        <p class="card-text">@tile.Number K</p>
+                        <p class="card-text">
+                            @if (tile.Number != null)
+                            {
+                                @(tile.Number + "K");
+                            }
+                            else
+                            {
+                                @("N/A");
+                            }
+                        </p>
                     </div>
                     <div class="card-footer border-0">@tile.Name</div>
                 </button>
@@ -52,12 +61,13 @@
 {
     private IEnumerable<TileDto>? tiles = null;
 
-    public string TileName = "Notifications Cleanup";
+    public string TileName = "Notifications cleanup";
     public int TileId { get; set; } = 1;
 
     protected override async Task OnInitializedAsync()
     {
         tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
+
     }
 
     protected void SelectedTile(TileDto tile)

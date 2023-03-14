@@ -1,0 +1,54 @@
+﻿@using MobileMonitoring.Shared;
+@inject HttpClient Http;
+
+
+<h3 class="h4">@TileName</h3>
+<div class="table-responsive">
+    @if (emails is null)
+    {
+        <div>
+            <p>No @TileName data to publish</p>
+        </div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id email</th>
+                    <th scope="col">Sender</th>
+                    <th scope="col">Receiver</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Creation Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (EmailDto email in emails)
+                {
+                    <tr>
+                        <th scope="row">@email.IdEmail</th>
+                        <td>@email.UserSender</td>
+                        <td>@email.UserReceiver</td>
+                        <td>@email.Subject</td>
+                        <td>@email.CreationDate</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+
+@code {
+    private IEnumerable<EmailDto>? emails = null;
+
+    [Parameter]
+    public string TileName { get; set; } = "Unsent emails";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        emails = await Http.GetFromJsonAsync<IEnumerable<EmailDto>>("api/Emails");
+
+        await base.OnParametersSetAsync();
+    }
+}
