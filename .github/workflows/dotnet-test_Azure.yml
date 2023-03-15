@@ -1,0 +1,44 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+    APPSERVICE_RESOURCE: wf3support-staging
+    PROJECT_FOLDER: ./MobileMonitoring/Server
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.103
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Set database parameters
+      run: sed -i "s/<dbpwd>/${{ secrets.AZURE_SQL_PASSWORD }}/" ${{ env.PROJECT_FOLDER }}/appsettings.json"
+    - name: Update Database
+      run: dotnet tool install --global dotnet-ef dotnet ef database update --project ${{ env.PROJECT_FOLDER }} -- --environment Staging
+    - name: Publish
+      run: dotnet publish -c Release -o ./MobMonitoringApp
+    - name: Deploy
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.APPSERVICE_RESOURCE }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ./MobMonitoringApp

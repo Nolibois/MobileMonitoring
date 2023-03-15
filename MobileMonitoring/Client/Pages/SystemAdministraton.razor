@@ -67,7 +67,6 @@
     protected override async Task OnInitializedAsync()
     {
         tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
-
     }
 
     protected void SelectedTile(TileDto tile)

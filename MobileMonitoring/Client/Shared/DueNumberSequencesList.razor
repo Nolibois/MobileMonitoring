@@ -1,0 +1,54 @@
+﻿@using MobileMonitoring.Shared;
+@inject HttpClient Http;
+
+
+<h3 class="h4">@TileName</h3>
+<div class="table-responsive">
+    @if (numberSequences is null)
+    {
+        <div>
+            <p>No @TileName data to publish</p>
+        </div>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id Number Sequence</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Number Sequence</th>
+                    <th scope="col">In Use</th>
+                    <th scope="col">Remaining</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (NumberSequenceDto number in numberSequences)
+                {
+                    <tr>
+                        <th scope="row">@number.IdNumberSequence</th>
+                        <td>@number.Company</td>
+                        <td>@number.NbSequence</td>
+                        <td>@number.InUse</td>
+                        <td>@number.Remaining</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+
+@code {
+    private IEnumerable<NumberSequenceDto>? numberSequences = null;
+
+    [Parameter]
+    public string TileName { get; set; } = "Due number sequences";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        numberSequences = await Http.GetFromJsonAsync<IEnumerable<NumberSequenceDto>>("api/NumberSequences");
+
+        await base.OnParametersSetAsync();
+    }
+}
