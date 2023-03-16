@@ -322,7 +322,7 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdNumberSequence = 1,
-                            CompanyId = 1,
+                            CompanyId = 2,
                             InUse = false,
                             NbSequence = "DAT-0000001",
                             Remaining = 100
@@ -330,7 +330,7 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdNumberSequence = 2,
-                            CompanyId = 1,
+                            CompanyId = 2,
                             InUse = true,
                             NbSequence = "DAT-4585654",
                             Remaining = 51
@@ -338,7 +338,7 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdNumberSequence = 3,
-                            CompanyId = 2,
+                            CompanyId = 1,
                             InUse = true,
                             NbSequence = "FRSI-74023465",
                             Remaining = 75
@@ -348,7 +348,7 @@ namespace MobileMonitoring.Server.Migrations
                             IdNumberSequence = 4,
                             CompanyId = 3,
                             InUse = true,
-                            NbSequence = "UMF-8249758",
+                            NbSequence = "USMF-8249758",
                             Remaining = 8
                         });
                 });
@@ -403,7 +403,7 @@ namespace MobileMonitoring.Server.Migrations
                             IdTile = 3,
                             Alert = false,
                             ModuleDynamicsId = 1,
-                            Name = "Database Cleanup",
+                            Name = "Database cleanup",
                             Number = 735.60000000000002
                         },
                         new
@@ -419,7 +419,7 @@ namespace MobileMonitoring.Server.Migrations
                             IdTile = 5,
                             Alert = false,
                             ModuleDynamicsId = 3,
-                            Name = "Due Number sequences"
+                            Name = "Due number sequences"
                         });
                 });
 
