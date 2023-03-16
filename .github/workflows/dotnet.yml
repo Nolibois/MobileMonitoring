@@ -34,7 +34,9 @@ jobs:
     - name: Set database parameters
       run: sed -i "s/<dbpwd>/${{ secrets.AZURE_SQL_PASSWORD }}/" ${{ env.PROJECT_FOLDER }}/appsettings.json
     - name: Update Database
-      run: dotnet tool install --global dotnet-ef dotnet ef database update --project ${{ env.PROJECT_FOLDER }} -- --environment Staging
+      run: 
+        dotnet tool install --global
+        dotnet-ef dotnet ef database update --project ${{ env.PROJECT_FOLDER }} -- --environment Staging
     - name: Publish
       run: dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/MobileMonitoring'
     - name: Deploy
