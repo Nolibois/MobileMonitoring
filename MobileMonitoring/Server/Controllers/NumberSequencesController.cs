@@ -17,6 +17,9 @@ namespace MobileMonitoring.Server.Controllers
         [HttpGet]
         public IEnumerable<NumberSequenceDto> Get([FromServices] MonitoringContext monitCont) => monitCont.NumberSequences
             .Include(numberSequence => numberSequence.Company)
-            .Select(numberSequence => new NumberSequenceDto(numberSequence));
+            .Select(numberSequence => new NumberSequenceDto(numberSequence))
+            .AsEnumerable()
+            .OrderBy(numberSequence => numberSequence.Remaining)
+            .ToList();
     }
 }

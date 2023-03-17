@@ -7,10 +7,13 @@ body {
     height: 16px;
 }
 
+.card-footer{
+    background: none !important ;
+}
+
 /*
  * Sidebar
  */
-
 .sidebar {
     position: fixed;
     top: 0;
@@ -91,6 +94,44 @@ body {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
 
+
+/*
+ * Pages
+ */
+.container-color-legend > span:not(.color-legend) {
+    margin-right: 1rem;
+}
+
+.color-legend {
+    display: inline-block;
+    width: 1rem;
+    height: 0.75rem;
+    border-radius: 3px;
+    margin-right: 0.5rem;
+}
+
+.card:hover{
+    border: inset 3px #6a9adee1 solid;
+}
+
+.content-box{
+    position: relative;
+}
+
+.border-box{
+    position: absolute;
+    width: 96%;
+    height: 96%;
+    top: 2%;
+    left: 2%;
+    transition: 0.2s ease-in-out;
+}
+
+.border-box:hover{
+    border: 4px solid #fff5;
+}
+
+
 /*
 * Blazor
 */
@@ -165,3 +206,4 @@ body {
 .table-group{
     margin-top:4rem;
 }
+

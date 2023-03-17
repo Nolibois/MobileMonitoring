@@ -25,15 +25,16 @@
         {
             if (tile.ModuleDynamics == "Due number sequences")
             {
-                <button @onclick="@(e => SelectedTile(tile))"
-            class="card text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3"
-            style="width: 12rem; height: 12rem;">
+                <button 
+                    @onclick="@(e => SelectedTile(tile))"
+                    class="card content-box text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3"
+                    style="width: 12rem; height: 12rem;">
 
                     <div class="card-body">
                         <p class="card-text">
                             @if (tile.Number != null)
                             {
-                                @(tile.Number + "K")
+                                @(tile.Number)
                                 ;
                             }
                             else
@@ -44,12 +45,15 @@
                         </p>
                     </div>
                     <div class="card-footer border-0">@tile.Name</div>
+                    <div class="border-box"></div>
                 </button>
             }
         }
     }
 
 </div>
+
+<Legend />
 
 <div class="table-group">
     <DueNumberSequencesList TileName="@TileName" />

@@ -15,5 +15,17 @@ namespace MobileMonitoring.Client.Shared
 
             return tile.Alert ? colorCardTile = "danger" : colorCardTile;
         }
+
+        /// <summary>
+        /// Color line least the limit
+        /// </summary>
+        /// <param name="numberSequence"></param>
+        /// <returns></returns>
+        public static string CriticalNumberSequence(this NumberSequenceDto numberSequence)
+        {
+            string styleLineNbSeq = "";
+
+            return numberSequence.Remaining < 10 ? styleLineNbSeq ="bg-danger text-light" : styleLineNbSeq;
+        }
     }
 }

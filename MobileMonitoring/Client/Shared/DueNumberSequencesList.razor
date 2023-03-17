@@ -3,6 +3,7 @@
 
 
 <h3 class="h4">@TileName</h3>
+
 <div class="table-responsive">
     @if (numberSequences is null)
     {
@@ -19,13 +20,13 @@
                     <th scope="col">Company</th>
                     <th scope="col">Number Sequence</th>
                     <th scope="col">In Use</th>
-                    <th scope="col">Remaining</th>
+                    <th scope="col">Remaining (%)</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (NumberSequenceDto number in numberSequences)
                 {
-                    <tr>
+                    <tr class="@number.CriticalNumberSequence()">
                         <th scope="row">@number.IdNumberSequence</th>
                         <td>@number.Company</td>
                         <td>@number.NbSequence</td>
@@ -36,6 +37,8 @@
             </tbody>
         </table>
     }
+
+    <p><em>* The remaining limit is set at 10%</em></p>
 </div>
 
 
