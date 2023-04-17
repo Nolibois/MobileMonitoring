@@ -256,7 +256,7 @@ namespace MobileMonitoring.Server
                     NbSequence = "DAT-0000001",
                     InUse = false,
                     Remaining = 100,
-                    CompanyId = 1
+                    CompanyId = 2
                 },
                 new NumberSequence()
                 {
@@ -264,7 +264,7 @@ namespace MobileMonitoring.Server
                     NbSequence = "DAT-4585654",
                     InUse = true,
                     Remaining = 51,
-                    CompanyId = 1
+                    CompanyId = 2
                 },
                 new NumberSequence()
                 {
@@ -272,12 +272,12 @@ namespace MobileMonitoring.Server
                     NbSequence = "FRSI-74023465",
                     InUse = true,
                     Remaining = 75,
-                    CompanyId = 2
+                    CompanyId = 1
                 },
                 new NumberSequence()
                 {
                     IdNumberSequence = 4,
-                    NbSequence = "UMF-8249758",
+                    NbSequence = "USMF-8249758",
                     InUse = true,
                     Remaining = 8,
                     CompanyId = 3

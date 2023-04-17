@@ -30,7 +30,7 @@
             {
                 <button 
                     @onclick="@(e => SelectedTile(tile))"
-                    class="card text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3" 
+                    class="card content-box text-bg-@tile.LimitKpiTile() rounded-0 m-3"
                     style="width: 12rem; height: 12rem;">
 
                     <div class="card-body">
@@ -46,11 +46,15 @@
                         </p>
                     </div>
                     <div class="card-footer border-0">@tile.Name</div>
+                    <div class="border-box"></div>
                 </button>
             }
         }
     }
 </div>
+
+
+<Legend/>
 
 <div class="table-group">
     <Cleanups TileId="@TileId" TileName="@TileName"/>
