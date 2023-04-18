@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using MobileMonitoring.Shared;
 
+@attribute [Authorize]
+
 @inject HttpClient Http;
 
 <PageTitle>Dashboard Monitoring</PageTitle>
