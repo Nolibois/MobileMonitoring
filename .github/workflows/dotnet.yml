@@ -38,7 +38,7 @@ jobs:
     - name: Update Database
       run: dotnet ef database update --project ${{ env.PROJECT_FOLDER }} -- --environment Staging
     - name: Publish
-      run: dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/MobileMonitoring'
+      run: dotnet publish -c Release --property PublishDir='${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/MobileMonitoring'
     - name: Deploy
       uses: azure/webapps-deploy@v2
       with:
