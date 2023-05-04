@@ -1,0 +1,65 @@
+﻿@page "/Settings"
+
+@using Microsoft.Extensions.Logging
+@using MobileMonitoring.Shared;
+@inject ILogger<Settings> Logger
+
+<PageTitle>Settings</PageTitle>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2 FocOnNav">Settings</h1>
+</div>
+
+<div class="d-flex flex-column pt-3 pb-2 mb-3">
+    <h2 class="h3">Thresholds</h2>
+
+    <EditForm Model="@threshold" OnSubmit="@HandleSubmit">
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <label class="col-form-label">
+                    Notifications
+                    <InputNumber id="thresholdNotifications" @bind-Value="threshold.ThresholdWarnings" class="form-control" />
+                </label>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <label class="col-form-label">
+                    Batch History Custom
+                    <InputNumber id="thresholdBatchHistory" @bind-Value="threshold.ThresholdWarnings" class="form-control" />
+                </label>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <label class="col-form-label">
+                    Journals
+                    <InputNumber id="thresholdJournals" @bind-Value="threshold.ThresholdWarnings" class="form-control" />
+                </label>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <label class="col-form-label">
+                    Unsent Emails (0 to 100)
+                    <InputNumber id="thresholdEmails" @bind-Value="threshold.ThresholdWarnings" class="form-control" />
+                </label>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </EditForm>
+</div>
+
+
+@code {
+    private Threshold threshold = new();
+
+    private void HandleSubmit()
+    {
+        Logger.LogInformation("HandleSubmit called");
+
+        // Process the form
+    }
+}

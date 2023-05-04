@@ -19,6 +19,7 @@ namespace MobileMonitoring.Server
         public DbSet<ModuleDynamics> ModulesDynamics { get; set; }
         public DbSet<Tile>           Tiles           { get; set; }
         public DbSet<NumberSequence> NumberSequences { get; set; }
+        public DbSet<Threshold>      Threshold       { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -191,7 +192,8 @@ namespace MobileMonitoring.Server
             modelBuilder.Entity<ModuleDynamics>().ToTable("ModulesDynamics").HasData(
                 new ModuleDynamics() { IdModule = 1, Name = "System administration" },
                 new ModuleDynamics() { IdModule = 2, Name = "Unsent emails" },
-                new ModuleDynamics() { IdModule = 3, Name = "Due Number sequences" }
+                new ModuleDynamics() { IdModule = 3, Name = "Due Number sequences" }, 
+                new ModuleDynamics() { IdModule = 4, Name = "General Ledger" }
             );
 
 
@@ -206,6 +208,7 @@ namespace MobileMonitoring.Server
                     Number = 15,
                     Alert = false,
                     ModuleDynamicsId = 1,
+                    ThresholdId = 1
                 },
                 new Tile()
                 {
@@ -214,6 +217,7 @@ namespace MobileMonitoring.Server
                     Number = 25,
                     Alert = true,
                     ModuleDynamicsId = 1,
+                    ThresholdId = 2
                 },
                 new Tile()
                 {
@@ -222,6 +226,7 @@ namespace MobileMonitoring.Server
                     Number = 735.6,
                     Alert = false,
                     ModuleDynamicsId = 1,
+                    ThresholdId = 3
                 },
                 new Tile()
                 {
@@ -229,14 +234,16 @@ namespace MobileMonitoring.Server
                     Name = "Unsent emails",
                     Number = 452,
                     Alert = true,
-                    ModuleDynamicsId = 2
+                    ModuleDynamicsId = 2,
+                    ThresholdId = 4
                 },
                 new Tile()
                 {
                     IdTile = 5,
                     Name = "Due Number sequences",
                     Alert = false,
-                    ModuleDynamicsId = 3
+                    ModuleDynamicsId = 3,
+                    ThresholdId = 5
                 }
             );
 
@@ -245,6 +252,21 @@ namespace MobileMonitoring.Server
                 .WithMany()
                 .HasForeignKey(tile => tile.ModuleDynamicsId);
 
+            modelBuilder.Entity<Tile>()
+                .HasOne(tile => tile.Threshold)
+                .WithMany()
+                .HasForeignKey(tile => tile.ThresholdId);
+
+            /*
+             * Threshold
+             */
+            modelBuilder.Entity<Threshold>().ToTable("Threshold").HasData(
+                new Threshold() { IdThreshold = 1, ThresholdWarnings = 0 },
+                new Threshold() { IdThreshold = 2, ThresholdWarnings = 0 },
+                new Threshold() { IdThreshold = 3, ThresholdWarnings = 0 },
+                new Threshold() { IdThreshold = 4, ThresholdWarnings = 0 },
+                new Threshold() { IdThreshold = 5, ThresholdWarnings = 0 }
+            );
 
             /*
              * NumberSequences
