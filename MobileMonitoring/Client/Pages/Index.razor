@@ -28,8 +28,7 @@
             <NavLink class="nav-link" href="@module" style="width: max-content;">
                 <button 
                     @onclick="@(e => SelectedModule(tile))" 
-                    class="card content-box text-bg-@tile.LimitKpiTile() rounded-0 m-3" 
-                    style="width: 12rem; height: 12rem;">
+                    class="card content-box text-bg-@tile.LimitKpiTile() rounded-0 m-3">
                     <div class="card-body">
                         <p class="card-text">@if (tile.Number != null)
                             {
