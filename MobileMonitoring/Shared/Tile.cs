@@ -19,7 +19,7 @@ namespace MobileMonitoring.Shared
       
         public int ModuleDynamicsId { get; set;}
 
-        public int ThresholdId { get; set; }
+        public int? ThresholdId { get; set; }
 
         #region Populated by EF Core
         #pragma warning disable CS8618 // Non-nullable field is uninitialized

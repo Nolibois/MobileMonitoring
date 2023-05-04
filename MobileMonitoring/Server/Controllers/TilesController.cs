@@ -19,6 +19,7 @@ namespace MobileMonitoring.Server.Controllers
         public IEnumerable<TileDto> Get([FromServices] MonitoringContext monitCont) => 
             monitCont.Tiles
                 .Include(tile => tile.ModuleDynamics)
+                .Include(tile => tile.Threshold)
                 .Select(tile => new TileDto(tile));
     }
 }

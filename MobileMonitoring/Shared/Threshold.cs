@@ -9,7 +9,7 @@ namespace MobileMonitoring.Shared
         [Key, JsonIgnore]
         public int IdThreshold { get; set; }
 
-        public int ThresholdWarnings { get; set; }
+        public int? ThresholdWarnings { get; set; }
 
     }
 }
