@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MobileMonitoring.Shared;
 
 namespace MobileMonitoring.Server.Controllers
@@ -14,5 +15,10 @@ namespace MobileMonitoring.Server.Controllers
         /// <returns>List of Modules Dynamics</returns>
         [HttpGet]
         public IEnumerable<Threshold> Get([FromServices] MonitoringContext monitCont) => monitCont.Threshold;
+
+        [HttpPut("{id}")]
+        public IEnumerable<Threshold> Update(int id, [FromForm] MonitoringContext monitCont) => 
+            monitCont.Threshold
+            ;
     }
 }

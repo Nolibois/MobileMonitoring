@@ -2,7 +2,10 @@
 
 @using Microsoft.Extensions.Logging
 @using MobileMonitoring.Shared;
-@inject ILogger<Settings> Logger
+@using System.Linq;
+
+@inject HttpClient Http;
+@inject ILogger<Settings> Logger;
 
 <PageTitle>Settings</PageTitle>
 
@@ -13,20 +16,40 @@
 <div class="d-flex flex-column pt-3 pb-2 mb-3">
     <h2 class="h3">Thresholds</h2>
 
-    <EditForm Model="@threshold" OnSubmit="@HandleSubmit">
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
-                <label class="col-form-label">
-                    Notifications
-                    <InputNumber id="thresholdNotifications" placeholder="3" @bind-Value="threshold.ThresholdWarnings"  class="form-control" />
-                </label>
+        @if (tiles is null)
+        {
+            <div>
+                <p>No threshold set</p>
             </div>
-        </div>
-        <div class="row g-3 align-items-center">
+        }
+        else
+        {
+            @foreach (TileDto tile in tiles)
+            {
+                <EditForm Model="@thresholdCompare" OnSubmit="HandleSubmit">
+
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label class="col-form-label">
+                                @tile.Name
+                                <InputNumber id=@("Threshold" + @tile.IdTile)
+                                    placeholder="@tile.Threshold"
+                                    @bind-Value=thresholdCompare.ThresholdWarnings
+                                    class="form-control" />
+                            </label>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </EditForm>
+            }
+        }
+@*        <div class="row g-3 align-items-center">
             <div class="col-auto">
                 <label class="col-form-label">
                     Batch History Custom
-                    <InputNumber id="thresholdBatchHistory" @bind-Value="threshold.ThresholdWarnings" class="form-control" />
+                    <InputNumber id="thresholdBatchHistory" @bind-Value="threshold.IdThreshold" class="form-control" />
                 </label>
             </div>
         </div>
@@ -34,7 +57,7 @@
             <div class="col-auto">
                 <label class="col-form-label">
                     Journals
-                    <InputNumber id="thresholdJournals" @bind-Value="threshold.ThresholdWarnings" class="form-control" />
+                    <InputNumber id="thresholdJournals" @bind-Value="threshold.IdThreshold" class="form-control" />
                 </label>
             </div>
         </div>
@@ -42,24 +65,95 @@
             <div class="col-auto">
                 <label class="col-form-label">
                     Unsent Emails (0 to 100)
-                    <InputNumber id="thresholdEmails" @bind-Value="threshold.ThresholdWarnings" class="form-control" />
+                    <InputNumber id="thresholdEmails" @bind-Value="threshold.IdThreshold" class="form-control" />
+                </label>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <label class="col-form-label">
+                    Remaining Number Sequence (%)
+                    <InputNumber id="thresholdNumberSequence" @bind-Value="threshold.IdThreshold" class="form-control" />
                 </label>
             </div>
         </div>
         <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-primary">Save</button>
-        </div>
-    </EditForm>
+        </div>*@
+
 </div>
 
 
 @code {
-    private Threshold threshold = new();
 
-    private void HandleSubmit()
+    //private IEnumerable<Threshold>? thresholds = null;
+    private IEnumerable<TileDto>? tiles = null;
+    private Threshold thresholdCompare = new();
+    private List<Threshold>? thresholds;
+
+    protected override async Task OnInitializedAsync()
     {
-        Logger.LogInformation("HandleSubmit called");
+        tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
+        if(tiles is not null)
+        {
+            if (thresholds is not null)
+            {
+                thresholds.Clear();
+                foreach (TileDto tile in tiles)
+                {
+                    thresholdCompare.IdThreshold = tile.IdTile;
+                    thresholdCompare.ThresholdWarnings = tile.Threshold;
 
-        // Process the form
+                    thresholds.Append(thresholdCompare);
+
+                    //threshold.ElementAt(tile.IdTile) = tile.Threshold;
+                }
+            }
+
+            
+        }
+        //thresholds = await Http.GetFromJsonAsync<IEnumerable<Threshold>>("api/Threshold");
     }
+
+    private async Task HandleSubmit()
+    {
+
+        try
+        {
+            Logger.LogInformation("HandleSubmit called");
+            //Add updated thresholds
+            /*if (thresholds is not null)
+                {
+                foreach (Threshold threshold in thresholds)
+                    {
+                    if (threshold.ThresholdWarnings is not null)
+                        {
+                        thresholdCompare.IdThreshold = threshold.IdThreshold;
+                        thresholdCompare.ThresholdWarnings = threshold.ThresholdWarnings;
+                    }
+                }
+            }*/
+
+            if(tiles is not null)
+            {
+                foreach(TileDto tile in tiles)
+                {
+                    if(tile.Threshold is not null)
+                    {
+                        thresholdCompare.IdThreshold = tile.IdTile;
+                        thresholdCompare.ThresholdWarnings = tile.Threshold;
+                    }
+                }
+            }
+            
+            var response = await Http.PutAsJsonAsync<Threshold>("api/Threshold/{id}", thresholdCompare);
+        }
+        catch(Exception ex)
+        {
+            Logger.LogError("Form processing error{Message}", ex.Message);
+        }
+
+        await Task.CompletedTask;
+    }
+
 }
