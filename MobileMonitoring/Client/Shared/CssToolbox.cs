@@ -27,5 +27,18 @@ namespace MobileMonitoring.Client.Shared
 
             return numberSequence.Remaining < 10 ? styleLineNbSeq ="bg-danger text-light" : styleLineNbSeq;
         }
+
+
+        /// <summary>
+        /// Display or not display
+        /// </summary>
+        /// <param name="threshold"></param>
+        /// <returns></returns>
+        public static string displayButtonSaveThreshold(this Threshold threshold)
+        {
+            string displayState = "d-flex";
+
+            return threshold.ThresholdWarnings is not null ? displayState :  displayState = "d-none";
+        }
     }
 }

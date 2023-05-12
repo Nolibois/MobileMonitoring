@@ -1,4 +1,4 @@
-﻿@page "/Settings"
+﻿@page "/Settings/{id:int?}"
 
 @using Microsoft.Extensions.Logging
 @using MobileMonitoring.Shared;
@@ -6,6 +6,7 @@
 
 @inject HttpClient Http;
 @inject ILogger<Settings> Logger;
+@inject IJSRuntime JSRuntime;
 
 <PageTitle>Settings</PageTitle>
 
@@ -16,137 +17,89 @@
 <div class="d-flex flex-column pt-3 pb-2 mb-3">
     <h2 class="h3">Thresholds</h2>
 
-        @if (tiles is null)
-        {
-            <div>
-                <p>No threshold set</p>
-            </div>
-        }
-        else
-        {
-            @foreach (TileDto tile in tiles)
-            {
-                <EditForm Model="@thresholdCompare" OnSubmit="HandleSubmit">
+    <EditForm Model="@threshold" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-                    <div class="row g-3 align-items-center">
-                        <div class="col-auto">
-                            <label class="col-form-label">
-                                @tile.Name
-                                <InputNumber id=@("Threshold" + @tile.IdTile)
-                                    placeholder="@tile.Threshold"
-                                    @bind-Value=thresholdCompare.ThresholdWarnings
-                                    class="form-control" />
-                            </label>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </EditForm>
-            }
-        }
-@*        <div class="row g-3 align-items-center">
-            <div class="col-auto">
-                <label class="col-form-label">
-                    Batch History Custom
-                    <InputNumber id="thresholdBatchHistory" @bind-Value="threshold.IdThreshold" class="form-control" />
-                </label>
-            </div>
-        </div>
         <div class="row g-3 align-items-center">
             <div class="col-auto">
                 <label class="col-form-label">
-                    Journals
-                    <InputNumber id="thresholdJournals" @bind-Value="threshold.IdThreshold" class="form-control" />
-                </label>
-            </div>
-        </div>
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
-                <label class="col-form-label">
-                    Unsent Emails (0 to 100)
-                    <InputNumber id="thresholdEmails" @bind-Value="threshold.IdThreshold" class="form-control" />
-                </label>
-            </div>
-        </div>
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
-                <label class="col-form-label">
-                    Remaining Number Sequence (%)
-                    <InputNumber id="thresholdNumberSequence" @bind-Value="threshold.IdThreshold" class="form-control" />
-                </label>
-            </div>
-        </div>
-        <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary">Save</button>
-        </div>*@
+                    Choose a module
+                    <InputSelect 
+                        id="selectModule" 
+                        @bind-Value=@selectedModule>
+                        <option value="">-- Select Module --</option>
+                        @if(tiles is not null)
+                        {
+                            foreach(TileDto tile in tiles)
+                            {
+                                <option value=@tile.IdTile>@tile.Name</option>
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => selectedModule)" />
 
+                    @if (string.IsNullOrEmpty(selectedModule))
+                    {
+                        <p>*Please, select a module to set.</p>
+                    }
+                    else
+                    {
+                        if (tiles is not null)
+                        {
+                            <InputNumber id="Threshold"
+                            placeholder="@tiles.FirstOrDefault(threshold => threshold.IdTile == Int32.Parse(selectedModule))?.Threshold"
+                            @bind-Value=threshold.ThresholdWarnings
+                            class="form-control" />
+
+                            <div class=@(threshold.displayButtonSaveThreshold() + " justify-content-end")>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        }
+                    }
+                    
+                </label>
+            </div>
+        </div>
+    </EditForm>
 </div>
 
 
 @code {
-
-    //private IEnumerable<Threshold>? thresholds = null;
+    [Parameter]
+    public int? Id { get; set; }
     private IEnumerable<TileDto>? tiles = null;
-    private Threshold thresholdCompare = new();
-    private List<Threshold>? thresholds;
+    private Threshold threshold = new();
+    private string? selectedModule;
 
     protected override async Task OnInitializedAsync()
     {
         tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
-        if(tiles is not null)
-        {
-            if (thresholds is not null)
-            {
-                thresholds.Clear();
-                foreach (TileDto tile in tiles)
-                {
-                    thresholdCompare.IdThreshold = tile.IdTile;
-                    thresholdCompare.ThresholdWarnings = tile.Threshold;
-
-                    thresholds.Append(thresholdCompare);
-
-                    //threshold.ElementAt(tile.IdTile) = tile.Threshold;
-                }
-            }
-
-            
-        }
-        //thresholds = await Http.GetFromJsonAsync<IEnumerable<Threshold>>("api/Threshold");
     }
 
-    private async Task HandleSubmit()
-    {
 
+    private async Task HandleValidSubmit()
+    {
         try
         {
             Logger.LogInformation("HandleSubmit called");
-            //Add updated thresholds
-            /*if (thresholds is not null)
-                {
-                foreach (Threshold threshold in thresholds)
-                    {
-                    if (threshold.ThresholdWarnings is not null)
-                        {
-                        thresholdCompare.IdThreshold = threshold.IdThreshold;
-                        thresholdCompare.ThresholdWarnings = threshold.ThresholdWarnings;
-                    }
-                }
-            }*/
 
-            if(tiles is not null)
+            if(threshold.ThresholdWarnings is not null && selectedModule is not null)
             {
-                foreach(TileDto tile in tiles)
+                threshold.IdThreshold = Int32.Parse(selectedModule);
+                Id = Int32.Parse(selectedModule);
+                var response = await Http.PutAsJsonAsync<Threshold>("api/Threshold/"+Id, threshold);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    if(tile.Threshold is not null)
-                    {
-                        thresholdCompare.IdThreshold = tile.IdTile;
-                        thresholdCompare.ThresholdWarnings = tile.Threshold;
-                    }
+                    await JSRuntime.InvokeVoidAsync("Alert", "The update has been performed.");
+                }
+                else
+                {
+                    throw new Exception($"Erreur lors de la mise à jour de la ressource : {response.ReasonPhrase}");
                 }
             }
-            
-            var response = await Http.PutAsJsonAsync<Threshold>("api/Threshold/{id}", thresholdCompare);
+
         }
         catch(Exception ex)
         {

@@ -1,14 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MobileMonitoring.Shared;
+using Newtonsoft.Json;
 
 namespace MobileMonitoring.Server
 {
     public class MonitoringContext :DbContext
     {
-        public MonitoringContext(DbContextOptions<MonitoringContext> options) : base(options)
+        /*public MonitoringContext(DbContextOptions<MonitoringContext> options) : base(options)
         {
 
-        }
+        }*/
+
+        public MonitoringContext([JsonProperty("options")] DbContextOptions<MonitoringContext> options) : base(options) { }
+
 
         public DbSet<Company>        Companies       { get; set; }
         public DbSet<User>           Users           { get; set; }
