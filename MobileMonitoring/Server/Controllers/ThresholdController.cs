@@ -17,17 +17,26 @@ namespace MobileMonitoring.Server.Controllers
         [HttpGet]
         public IEnumerable<Threshold> Get([FromServices] MonitoringContext monitCont) => monitCont.Threshold;
 
+        /// <summary>
+        /// Update Threshold by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="updatedThreshold"></param>
+        /// <param name="monitCont"></param>
+        /// <returns></returns>
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] Threshold updatedThreshold, [FromServices] MonitoringContext monitCont)
         {
-            var threshold = await monitCont.Threshold.Include(t => t.ThresholdWarnings).FirstOrDefaultAsync(t => t.IdThreshold == id);
+            //var threshold = await monitCont.Threshold.Include(t => t.ThresholdWarnings).FirstOrDefaultAsync(t => t.IdThreshold == id);
+            var threshold = await monitCont.Threshold.FirstOrDefaultAsync(t => t.IdThreshold == id);
 
             if (threshold == null)
             {
                 return NotFound();
             }
 
-            threshold.IdThreshold = updatedThreshold.IdThreshold;
+            //threshold.IdThreshold = updatedThreshold.IdThreshold;
+            threshold.IdThreshold = id;
             threshold.ThresholdWarnings = updatedThreshold.ThresholdWarnings;
 
             try
