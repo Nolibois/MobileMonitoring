@@ -67,9 +67,10 @@
 
 @code {
     [Parameter]
-    public int? Id { get; set; }
+    public int Id { get; set; }
     private IEnumerable<TileDto>? tiles = null;
     private Threshold threshold = new();
+    private TileDto? tile = new();
     private string? selectedModule;
 
     protected override async Task OnInitializedAsync()
@@ -86,13 +87,14 @@
 
             if(threshold.ThresholdWarnings is not null && selectedModule is not null)
             {
-                threshold.IdThreshold = Int32.Parse(selectedModule);
                 Id = Int32.Parse(selectedModule);
-                var response = await Http.PutAsJsonAsync<Threshold>("api/Threshold/"+Id, threshold);
+                threshold.IdThreshold = Id;
+                var response = await Http.PutAsJsonAsync<Threshold>("api/Threshold/" + Id, threshold);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    await JSRuntime.InvokeVoidAsync("alert", "The update has been performed.");
+                    await JSRuntime.InvokeVoidAsync("alert", "The new threshold is " + threshold.ThresholdWarnings + ".");
+                    await updateAlertTile(Id);
                 }
                 else
                 {
@@ -102,6 +104,38 @@
 
         }
         catch(Exception ex)
+        {
+            Logger.LogError("Form processing error{Message}", ex.Message);
+        }
+
+        await Task.CompletedTask;
+    }
+
+
+    private async Task updateAlertTile(int tileId)
+    {
+        try
+        {
+            tile = await Http.GetFromJsonAsync<TileDto>("api/Tiles/" + tileId);
+
+            if (tile != null)
+            {
+                if (tile.Number > tile.Threshold)
+                {
+                    var responseAlertTile = await Http.PutAsJsonAsync<TileDto>("api/Tiles/" + tileId, tile);
+
+                    if (responseAlertTile.IsSuccessStatusCode)
+                    {
+                        await JSRuntime.InvokeVoidAsync("alert", "The new alert tile is " + tile.Alert + ".");
+                    }
+                    else
+                    {
+                        throw new Exception($"Erreur lors de la mise à jour de la ressource : {responseAlertTile.ReasonPhrase}");
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
         {
             Logger.LogError("Form processing error{Message}", ex.Message);
         }
