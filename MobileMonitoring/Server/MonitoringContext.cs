@@ -71,7 +71,7 @@ namespace MobileMonitoring.Server
 
 
             /*
-             * EmailStatusese
+             * EmailStatuses
              */
             modelBuilder.Entity<EmailStatus>().ToTable("EmailStatuses").HasData(
                 new EmailStatus() { IdEmailStatus = 1, Name = "Send" },
@@ -219,7 +219,7 @@ namespace MobileMonitoring.Server
                     IdTile = 2,
                     Name = "Cleanup batch history custom",
                     Number = 25,
-                    Alert = true,
+                    Alert = false,
                     ModuleDynamicsId = 1,
                     ThresholdId = 2
                 },
@@ -237,7 +237,7 @@ namespace MobileMonitoring.Server
                     IdTile = 4,
                     Name = "Unsent emails",
                     Number = 452,
-                    Alert = true,
+                    Alert = false,
                     ModuleDynamicsId = 2,
                     ThresholdId = 4
                 },
