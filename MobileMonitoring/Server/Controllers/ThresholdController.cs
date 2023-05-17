@@ -10,10 +10,10 @@ namespace MobileMonitoring.Server.Controllers
     public class ThresholdController : ControllerBase
     {
         /// <summary>
-        /// Get all Modules Dynamics
+        /// Get all thresholds of Modules Dynamics
         /// </summary>
         /// <param name="monitCont"></param>
-        /// <returns>List of Modules Dynamics</returns>
+        /// <returns>List of Thresholds</returns>
         [HttpGet]
         public IEnumerable<Threshold> Get([FromServices] MonitoringContext monitCont) => monitCont.Threshold;
 

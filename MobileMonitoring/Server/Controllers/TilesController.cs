@@ -74,7 +74,11 @@ namespace MobileMonitoring.Server.Controllers
             }
 
             tile.IdTile = id;
-            if(tile.Number > Convert.ToDouble(tile.Threshold.ThresholdWarnings))
+            if(tile.Number >= Convert.ToDouble(tile.Threshold.ThresholdWarnings))
+            {
+                tile.Alert = false;
+            }
+            else
             {
                 tile.Alert = true;
             }

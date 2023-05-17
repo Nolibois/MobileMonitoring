@@ -15,20 +15,21 @@
 </div>
 
 <div class="d-flex flex-column pt-3 pb-2 mb-3">
-    <h2 class="h3">Thresholds</h2>
+    <h2 class="h3">Thresholds Warnings</h2>
 
     <EditForm Model="@threshold" OnValidSubmit="HandleValidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
 
         <div class="row g-3 align-items-center">
-            <div class="col-auto">
-                <label class="col-form-label">
+            <div class="col-4">
+                <label class="col-form-label mr-3" for="selectModule">
                     Choose a module
                     <InputSelect 
+                        class="mb-2 form-select"
                         id="selectModule" 
                         @bind-Value=@selectedModule>
-                        <option value="">-- Select Module --</option>
+                        <option selected>-- Select Module --</option>
                         @if(tiles is not null)
                         {
                             foreach(TileDto tile in tiles)
@@ -38,27 +39,31 @@
                         }
                     </InputSelect>
                     <ValidationMessage For="@(() => selectedModule)" />
-
-                    @if (string.IsNullOrEmpty(selectedModule))
-                    {
-                        <p>*Please, select a module to set.</p>
-                    }
-                    else
-                    {
-                        if (tiles is not null)
-                        {
-                            <InputNumber id="Threshold"
-                            placeholder="@tiles.FirstOrDefault(threshold => threshold.IdTile == Int32.Parse(selectedModule))?.Threshold"
-                            @bind-Value=threshold.ThresholdWarnings
-                            class="form-control" />
-
-                            <div class=@(threshold.displayButtonSaveThreshold() + " justify-content-end")>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        }
-                    }
-                    
                 </label>
+
+                @if (string.IsNullOrEmpty(selectedModule))
+                {
+                    <p>*Please, select a module to set.</p>
+                }
+                else
+                {
+                    if (tiles is not null)
+                    {
+                        <label class="col-form-label mr-3" for="threshold">
+                            Change parameter
+                            <InputNumber 
+                                class="mb-2 form-control"
+                                id="threshold"
+                                placeholder="@tiles.FirstOrDefault(threshold => threshold.IdTile == Int32.Parse(selectedModule))?.Threshold"
+                                @bind-Value=threshold.ThresholdWarnings />
+                        </label>
+
+                        <div class="d-flex my-2")>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    }
+                }
+                    
             </div>
         </div>
     </EditForm>
@@ -72,6 +77,7 @@
     private Threshold threshold = new();
     private TileDto? tile = new();
     private string? selectedModule;
+    //private string displayButton = "d-none";
 
     protected override async Task OnInitializedAsync()
     {
@@ -120,19 +126,17 @@
 
             if (tile != null)
             {
-                if (tile.Number > tile.Threshold)
-                {
-                    var responseAlertTile = await Http.PutAsJsonAsync<TileDto>("api/Tiles/" + tileId, tile);
+                var responseAlertTile = await Http.PutAsJsonAsync<TileDto>("api/Tiles/" + tileId, tile);
 
-                    if (responseAlertTile.IsSuccessStatusCode)
-                    {
-                        await JSRuntime.InvokeVoidAsync("alert", "The new alert tile is " + tile.Alert + ".");
-                    }
-                    else
-                    {
-                        throw new Exception($"Erreur lors de la mise à jour de la ressource : {responseAlertTile.ReasonPhrase}");
-                    }
+                if (responseAlertTile.IsSuccessStatusCode)
+                {
+                    await JSRuntime.InvokeVoidAsync("alert", "The new alert tile is modified.");
                 }
+                else
+                {
+                    throw new Exception($"Erreur lors de la mise à jour de la ressource : {responseAlertTile.ReasonPhrase}");
+                }
+               
             }
         }
         catch (Exception ex)

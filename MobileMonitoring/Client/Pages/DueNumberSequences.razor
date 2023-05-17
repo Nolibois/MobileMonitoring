@@ -25,27 +25,31 @@
         {
             if (tile.ModuleDynamics == "Due number sequences")
             {
-                <button 
-                    @onclick="@(e => SelectedTile(tile))"
-                    class="card content-box text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3">
+                <div class="container-cards">
+                    <button 
+                        @onclick="@(e => SelectedTile(tile))"
+                        class="card content-box text-bg-@tile.LimitKpiTile() mb-3 rounded-0 m-3">
 
-                    <div class="card-body">
-                        <p class="card-text">
-                            @if (tile.Number != null)
-                            {
-                                @(tile.Number)
-                                ;
-                            }
-                            else
-                            {
-                                @("N/A")
-                                ;
-                            }
-                        </p>
-                    </div>
-                    <div class="card-footer border-0">@tile.Name</div>
-                    <div class="border-box"></div>
-                </button>
+                        <div class="card-body">
+                            <p class="card-text">
+                                @if (tile.Number != null)
+                                {
+                                    @(tile.Number)
+                                    ;
+                                }
+                                else
+                                {
+                                    @("N/A")
+                                    ;
+                                }
+                            </p>
+                        </div>
+                        <div class="card-footer border-0">@tile.Name</div>
+                        <div class="border-box"></div>
+                    </button>
+
+                    <NavLink class="d-block mt-1 mx-3 mb-3" href="/Settings"><em>*Threshold: @tile.Threshold</em></NavLink>
+                </div>
             }
         }
     }

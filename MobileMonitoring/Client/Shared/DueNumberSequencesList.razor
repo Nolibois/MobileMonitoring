@@ -46,7 +46,7 @@
     private IEnumerable<NumberSequenceDto>? numberSequences = null;
 
     [Parameter]
-    public string TileName { get; set; } = "Due number sequences";
+    public string? TileName { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {

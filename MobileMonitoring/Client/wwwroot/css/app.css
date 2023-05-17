@@ -7,6 +7,10 @@ body {
     height: 16px;
 }
 
+a {
+    text-decoration: none;
+}
+
 .card-footer {
     background: none !important;
 }
@@ -114,6 +118,10 @@ body {
     margin-right: 0.5rem;
 }
 
+.container-cards{
+    width: inherit !important;
+}
+
 .card {
     width: 10rem;
     height: 10rem;
@@ -141,6 +149,16 @@ body {
         border: 4px solid #fff5;
     }
 
+
+/*
+* Forms
+*/
+
+select, input {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
 
 /*
 * Blazor

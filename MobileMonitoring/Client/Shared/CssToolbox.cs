@@ -11,9 +11,9 @@ namespace MobileMonitoring.Client.Shared
         /// <returns>Color of tile, primary it is OK, danger limit exceeded</returns>
         public static string LimitKpiTile(this TileDto tile)
         {
-            string colorCardTile = "primary";
+            string colorCardTile = "danger";
 
-            return tile.Alert ? colorCardTile = "danger" : colorCardTile;
+            return tile.Alert ? colorCardTile = "primary" : colorCardTile;
         }
 
         /// <summary>
@@ -34,11 +34,12 @@ namespace MobileMonitoring.Client.Shared
         /// </summary>
         /// <param name="threshold"></param>
         /// <returns></returns>
-        public static string displayButtonSaveThreshold(this Threshold threshold)
+        /*public static string displayButtonSaveThreshold(this Threshold threshold)
         {
             string displayState = "d-flex";
 
             return threshold.ThresholdWarnings is not null ? displayState :  displayState = "d-none";
-        }
+        }*/
+
     }
 }
