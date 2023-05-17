@@ -12,7 +12,7 @@ using MobileMonitoring.Server;
 namespace MobileMonitoring.Server.Migrations
 {
     [DbContext(typeof(MonitoringContext))]
-    [Migration("20230517102050_InitialDb")]
+    [Migration("20230517115617_InitialDb")]
     partial class InitialDb
     {
         /// <inheritdoc />
@@ -197,7 +197,7 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdEmail = 1,
-                            CreationDate = new DateTime(2023, 5, 17, 12, 20, 49, 930, DateTimeKind.Local).AddTicks(4719),
+                            CreationDate = new DateTime(2023, 5, 17, 13, 56, 17, 532, DateTimeKind.Local).AddTicks(6896),
                             EmailStatusId = 1,
                             Subject = "Review task KJB000012",
                             UserReceiverId = 2,
@@ -380,27 +380,27 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdThreshold = 1,
-                            ThresholdWarnings = 0
+                            ThresholdWarnings = 10
                         },
                         new
                         {
                             IdThreshold = 2,
-                            ThresholdWarnings = 0
+                            ThresholdWarnings = 10
                         },
                         new
                         {
                             IdThreshold = 3,
-                            ThresholdWarnings = 0
+                            ThresholdWarnings = 10
                         },
                         new
                         {
                             IdThreshold = 4,
-                            ThresholdWarnings = 0
+                            ThresholdWarnings = 10
                         },
                         new
                         {
                             IdThreshold = 5,
-                            ThresholdWarnings = 0
+                            ThresholdWarnings = 1
                         });
                 });
 

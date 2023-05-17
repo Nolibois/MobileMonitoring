@@ -265,11 +265,11 @@ namespace MobileMonitoring.Server
              * Threshold
              */
             modelBuilder.Entity<Threshold>().ToTable("Threshold").HasData(
-                new Threshold() { IdThreshold = 1, ThresholdWarnings = 0 },
-                new Threshold() { IdThreshold = 2, ThresholdWarnings = 0 },
-                new Threshold() { IdThreshold = 3, ThresholdWarnings = 0 },
-                new Threshold() { IdThreshold = 4, ThresholdWarnings = 0 },
-                new Threshold() { IdThreshold = 5, ThresholdWarnings = 0 }
+                new Threshold() { IdThreshold = 1, ThresholdWarnings = 10 },
+                new Threshold() { IdThreshold = 2, ThresholdWarnings = 10 },
+                new Threshold() { IdThreshold = 3, ThresholdWarnings = 10 },
+                new Threshold() { IdThreshold = 4, ThresholdWarnings = 10 },
+                new Threshold() { IdThreshold = 5, ThresholdWarnings = 1 }
             );
 
             /*
