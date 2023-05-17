@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MobileMonitoring.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class NewInitialDb : Migration
+    public partial class InitialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,6 +66,19 @@ namespace MobileMonitoring.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Threshold",
+                columns: table => new
+                {
+                    IdThreshold = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ThresholdWarnings = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Threshold", x => x.IdThreshold);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "NumberSequences",
                 columns: table => new
                 {
@@ -117,7 +130,8 @@ namespace MobileMonitoring.Server.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Number = table.Column<double>(type: "float", nullable: true),
                     Alert = table.Column<bool>(type: "bit", nullable: false),
-                    ModuleDynamicsId = table.Column<int>(type: "int", nullable: false)
+                    ModuleDynamicsId = table.Column<int>(type: "int", nullable: false),
+                    ThresholdId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -127,6 +141,12 @@ namespace MobileMonitoring.Server.Migrations
                         column: x => x.ModuleDynamicsId,
                         principalTable: "ModulesDynamics",
                         principalColumn: "IdModule",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tiles_Threshold_ThresholdId",
+                        column: x => x.ThresholdId,
+                        principalTable: "Threshold",
+                        principalColumn: "IdThreshold",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -234,7 +254,20 @@ namespace MobileMonitoring.Server.Migrations
                 {
                     { 1, "System administration" },
                     { 2, "Unsent emails" },
-                    { 3, "Due Number sequences" }
+                    { 3, "Due Number sequences" },
+                    { 4, "General Ledger" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Threshold",
+                columns: new[] { "IdThreshold", "ThresholdWarnings" },
+                values: new object[,]
+                {
+                    { 1, 0 },
+                    { 2, 0 },
+                    { 3, 0 },
+                    { 4, 0 },
+                    { 5, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -242,22 +275,22 @@ namespace MobileMonitoring.Server.Migrations
                 columns: new[] { "IdNumberSequence", "CompanyId", "InUse", "NbSequence", "Remaining" },
                 values: new object[,]
                 {
-                    { 1, 1, false, "DAT-0000001", 100 },
-                    { 2, 1, true, "DAT-4585654", 51 },
-                    { 3, 2, true, "FRSI-74023465", 75 },
-                    { 4, 3, true, "UMF-8249758", 8 }
+                    { 1, 2, false, "DAT-0000001", 100 },
+                    { 2, 2, true, "DAT-4585654", 51 },
+                    { 3, 1, true, "FRSI-74023465", 75 },
+                    { 4, 3, true, "USMF-8249758", 8 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Tiles",
-                columns: new[] { "IdTile", "Alert", "ModuleDynamicsId", "Name", "Number" },
+                columns: new[] { "IdTile", "Alert", "ModuleDynamicsId", "Name", "Number", "ThresholdId" },
                 values: new object[,]
                 {
-                    { 1, false, 1, "Notifications cleanup", 15.0 },
-                    { 2, true, 1, "Cleanup batch history custom", 25.0 },
-                    { 3, false, 1, "Database Cleanup", 735.60000000000002 },
-                    { 4, true, 2, "Unsent emails", 452.0 },
-                    { 5, false, 3, "Due Number sequences", null }
+                    { 1, false, 1, "Notifications cleanup", 15.0, 1 },
+                    { 2, false, 1, "Cleanup batch history custom", 25.0, 2 },
+                    { 3, false, 1, "Database cleanup", 89.0, 3 },
+                    { 4, false, 2, "Unsent emails", 75.0, 4 },
+                    { 5, false, 3, "Due number sequences", null, 5 }
                 });
 
             migrationBuilder.InsertData(
@@ -285,7 +318,7 @@ namespace MobileMonitoring.Server.Migrations
                 columns: new[] { "IdEmail", "CreationDate", "EmailStatusId", "Subject", "UserReceiverId", "UserSenderId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 2, 15, 19, 43, 10, 283, DateTimeKind.Local).AddTicks(3720), 1, "Review task KJB000012", 2, 1 },
+                    { 1, new DateTime(2023, 5, 17, 12, 20, 49, 930, DateTimeKind.Local).AddTicks(4719), 1, "Review task KJB000012", 2, 1 },
                     { 2, new DateTime(2018, 12, 27, 8, 0, 0, 0, DateTimeKind.Unspecified), 2, "FR:Review task KJB000012", 1, 2 },
                     { 3, new DateTime(2019, 2, 17, 20, 15, 43, 0, DateTimeKind.Unspecified), 3, "What's taht Task KJB000012 ??", 3, 1 }
                 });
@@ -331,6 +364,11 @@ namespace MobileMonitoring.Server.Migrations
                 column: "ModuleDynamicsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tiles_ThresholdId",
+                table: "Tiles",
+                column: "ThresholdId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_CompanyId",
                 table: "Users",
                 column: "CompanyId");
@@ -362,6 +400,9 @@ namespace MobileMonitoring.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "ModulesDynamics");
+
+            migrationBuilder.DropTable(
+                name: "Threshold");
 
             migrationBuilder.DropTable(
                 name: "Companies");

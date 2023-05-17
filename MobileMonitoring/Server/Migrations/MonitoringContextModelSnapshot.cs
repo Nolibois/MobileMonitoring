@@ -194,7 +194,7 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdEmail = 1,
-                            CreationDate = new DateTime(2023, 5, 4, 16, 53, 15, 697, DateTimeKind.Local).AddTicks(3356),
+                            CreationDate = new DateTime(2023, 5, 17, 12, 20, 49, 930, DateTimeKind.Local).AddTicks(4719),
                             EmailStatusId = 1,
                             Subject = "Review task KJB000012",
                             UserReceiverId = 2,
@@ -423,7 +423,8 @@ namespace MobileMonitoring.Server.Migrations
                     b.Property<double?>("Number")
                         .HasColumnType("float");
 
-                    b.Property<int>("ThresholdId")
+                    b.Property<int?>("ThresholdId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("IdTile");
@@ -447,7 +448,7 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdTile = 2,
-                            Alert = true,
+                            Alert = false,
                             ModuleDynamicsId = 1,
                             Name = "Cleanup batch history custom",
                             Number = 25.0,
@@ -458,17 +459,17 @@ namespace MobileMonitoring.Server.Migrations
                             IdTile = 3,
                             Alert = false,
                             ModuleDynamicsId = 1,
-                            Name = "Database Cleanup",
-                            Number = 735.60000000000002,
+                            Name = "Database cleanup",
+                            Number = 89.0,
                             ThresholdId = 3
                         },
                         new
                         {
                             IdTile = 4,
-                            Alert = true,
+                            Alert = false,
                             ModuleDynamicsId = 2,
                             Name = "Unsent emails",
-                            Number = 452.0,
+                            Number = 75.0,
                             ThresholdId = 4
                         },
                         new
@@ -476,7 +477,7 @@ namespace MobileMonitoring.Server.Migrations
                             IdTile = 5,
                             Alert = false,
                             ModuleDynamicsId = 3,
-                            Name = "Due Number sequences",
+                            Name = "Due number sequences",
                             ThresholdId = 5
                         });
                 });

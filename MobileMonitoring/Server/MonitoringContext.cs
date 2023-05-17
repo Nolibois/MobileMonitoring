@@ -226,8 +226,8 @@ namespace MobileMonitoring.Server
                 new Tile()
                 {
                     IdTile = 3,
-                    Name = "Database Cleanup",
-                    Number = 735.6,
+                    Name = "Database cleanup",
+                    Number = 89,
                     Alert = false,
                     ModuleDynamicsId = 1,
                     ThresholdId = 3
@@ -236,7 +236,7 @@ namespace MobileMonitoring.Server
                 {
                     IdTile = 4,
                     Name = "Unsent emails",
-                    Number = 452,
+                    Number = 75,
                     Alert = false,
                     ModuleDynamicsId = 2,
                     ThresholdId = 4
@@ -244,7 +244,7 @@ namespace MobileMonitoring.Server
                 new Tile()
                 {
                     IdTile = 5,
-                    Name = "Due Number sequences",
+                    Name = "Due number sequences",
                     Alert = false,
                     ModuleDynamicsId = 3,
                     ThresholdId = 5
