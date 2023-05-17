@@ -12,7 +12,7 @@ using MobileMonitoring.Server;
 namespace MobileMonitoring.Server.Migrations
 {
     [DbContext(typeof(MonitoringContext))]
-    [Migration("20230517115617_InitialDb")]
+    [Migration("20230517121152_InitialDb")]
     partial class InitialDb
     {
         /// <inheritdoc />
@@ -197,7 +197,7 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdEmail = 1,
-                            CreationDate = new DateTime(2023, 5, 17, 13, 56, 17, 532, DateTimeKind.Local).AddTicks(6896),
+                            CreationDate = new DateTime(2023, 5, 17, 14, 11, 52, 345, DateTimeKind.Local).AddTicks(8711),
                             EmailStatusId = 1,
                             Subject = "Review task KJB000012",
                             UserReceiverId = 2,

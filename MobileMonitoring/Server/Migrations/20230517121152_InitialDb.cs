@@ -318,7 +318,7 @@ namespace MobileMonitoring.Server.Migrations
                 columns: new[] { "IdEmail", "CreationDate", "EmailStatusId", "Subject", "UserReceiverId", "UserSenderId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 5, 17, 13, 56, 17, 532, DateTimeKind.Local).AddTicks(6896), 1, "Review task KJB000012", 2, 1 },
+                    { 1, new DateTime(2023, 5, 17, 14, 11, 52, 345, DateTimeKind.Local).AddTicks(8711), 1, "Review task KJB000012", 2, 1 },
                     { 2, new DateTime(2018, 12, 27, 8, 0, 0, 0, DateTimeKind.Unspecified), 2, "FR:Review task KJB000012", 1, 2 },
                     { 3, new DateTime(2019, 2, 17, 20, 15, 43, 0, DateTimeKind.Unspecified), 3, "What's taht Task KJB000012 ??", 3, 1 }
                 });
