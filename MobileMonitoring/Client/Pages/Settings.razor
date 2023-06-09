@@ -77,7 +77,6 @@
     private Threshold threshold = new();
     private TileDto? tile = new();
     private string? selectedModule;
-    //private string displayButton = "d-none";
 
     protected override async Task OnInitializedAsync()
     {
@@ -122,8 +121,6 @@
     {
         try
         {
-            tile = await Http.GetFromJsonAsync<TileDto>("api/Tiles/" + tileId);
-
             if (tile != null)
             {
                 var responseAlertTile = await Http.PutAsJsonAsync<TileDto>("api/Tiles/" + tileId, tile);
