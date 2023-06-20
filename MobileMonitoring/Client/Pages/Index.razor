@@ -3,7 +3,7 @@
 
 @attribute [Authorize]
 
-@inject HttpClient Http;
+@inject IHttpClientFactory httpFactory;
 
 <PageTitle>Dashboard Monitoring</PageTitle>
 
@@ -55,7 +55,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
+        try
+        {
+            var httpSec = httpFactory.CreateClient("PrivateApi");
+            tiles = await httpSec.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
+        }
+        catch(AccessTokenNotAvailableException e)
+        {
+            e.Redirect();
+        }
     }
 
     protected void SelectedModule(TileDto tile)

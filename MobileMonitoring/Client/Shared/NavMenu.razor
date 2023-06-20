@@ -10,92 +10,113 @@
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
             <span>Data Cleanup Monitoring</span>
         </h6>
+        <AuthorizeView>
+            <NotAuthorized>
+				<NavLink class="nav-link px-3" href="/authentication/login">To display menu "Sign in"</NavLink>
+            </NotAuthorized>
+            <Authorized>
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/SystemAdministration">
+							<span data-feather="shield" class="align-text-bottom"></span>
+							System administration
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/GeneralLedger">
+							<span data-feather="book" class="align-text-bottom"></span>
+							General ledger
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/SalesAndMarketing">
+							<span data-feather="shopping-bag" class="align-text-bottom"></span>
+							Sales and marketing
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/ProcurementAndSourcing">
+							<span data-feather="package" class="align-text-bottom"></span>
+							Procurement and sourcing
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/WarehouseManagement">
+							<span data-feather="box" class="align-text-bottom"></span>
+							Warehouse management
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/InventoryManagement">
+							<span data-feather="clipboard" class="align-text-bottom"></span>
+							Inventory management
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/ProductionControl">
+							<span data-feather="tool" class="align-text-bottom"></span>
+							Production control
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/CostManagement">
+							<span data-feather="dollar-sign" class="align-text-bottom"></span>
+							Cost management
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/MasterPlanning">
+							<span data-feather="calendar" class="align-text-bottom"></span>
+							Master planning
+						</NavLink>
+					</li>
+				</ul>
 
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/SystemAdministration">
-                    <span data-feather="shield" class="align-text-bottom"></span>
-                    System administration
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/GeneralLedger">
-                    <span data-feather="book" class="align-text-bottom"></span>
-                    General ledger
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/SalesAndMarketing">
-                    <span data-feather="shopping-bag" class="align-text-bottom"></span>
-                    Sales and marketing
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/ProcurementAndSourcing">
-                    <span data-feather="package" class="align-text-bottom"></span>
-                    Procurement and sourcing
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/WarehouseManagement">
-                    <span data-feather="box" class="align-text-bottom"></span>
-                    Warehouse management
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/InventoryManagement">
-                    <span data-feather="clipboard" class="align-text-bottom"></span>
-                    Inventory management
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/ProductionControl">
-                    <span data-feather="tool" class="align-text-bottom"></span>
-                    Production control
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/CostManagement">
-                    <span data-feather="dollar-sign" class="align-text-bottom"></span>
-                    Cost management
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/MasterPlanning">
-                    <span data-feather="calendar" class="align-text-bottom"></span>
-                    Master planning
-                </NavLink>
-            </li>
-        </ul>
+            </Authorized>
+        </AuthorizeView>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
             <span>Alerts Emails and Number Sequences</span>
         </h6>
-        <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/UnsentEmails">
-                    <span data-feather="mail" class="align-text-bottom"></span>
-                    Unsent Emails
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/DueNumberSequences">
-                    <span data-feather="alert-circle" class="align-text-bottom"></span>
-                    Due number sequences
-                </NavLink>
-            </li>
-        </ul>
+		<AuthorizeView>
+			<NotAuthorized>
+				<NavLink class="nav-link px-3" href="/authentication/login">To display menu "Sign in"</NavLink>
+			</NotAuthorized>
+			<Authorized>
+				<ul class="nav flex-column mb-2">
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/UnsentEmails">
+							<span data-feather="mail" class="align-text-bottom"></span>
+							Unsent Emails
+						</NavLink>
+					</li>
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/DueNumberSequences">
+							<span data-feather="alert-circle" class="align-text-bottom"></span>
+							Due number sequences
+						</NavLink>
+					</li>
+				</ul>
+			</Authorized>
+		</AuthorizeView>
         <hr />
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
             <span>More</span>
         </h6>
-        <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-                <NavLink class="nav-link" href="/Settings">
-                    <span data-feather="settings" class="align-text-bottom"></span>
-                    Settings
-                </NavLink>
-            </li>
-        </ul>
+				<AuthorizeView>
+			<NotAuthorized>
+				<NavLink class="nav-link px-3" href="/authentication/login">To display menu "Sign in"</NavLink>
+			</NotAuthorized>
+			<Authorized>
+				<ul class="nav flex-column mb-2">
+					<li class="nav-item">
+						<NavLink class="nav-link" href="/Settings">
+							<span data-feather="settings" class="align-text-bottom"></span>
+							Settings
+						</NavLink>
+					</li>
+				</ul>
+			</Authorized>
+		</AuthorizeView>
     </div>
 </nav>

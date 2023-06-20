@@ -1,8 +1,9 @@
 ﻿@page "/SystemAdministration";
 @using MobileMonitoring.Shared;
 
-@inject HttpClient Http;
-@inject NavigationManager Nav;
+@attribute [Authorize];
+
+@inject IHttpClientFactory httpFactory;
 
 
 <PageTitle>System administration</PageTitle>
@@ -49,7 +50,9 @@
                         <div class="border-box"></div>
                     </button>
 
-                    <NavLink class="d-block mt-1 mx-3 mb-3" href="/Settings"><em>*Threshold: @tile.Threshold</em></NavLink>
+                    <NavLink class="d-block mt-1 mx-3 mb-3" href="/Settings">
+                        <em>*Threshold: @tile.Threshold</em>
+                    </NavLink>
                 </div>
             }
         }
@@ -73,7 +76,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
+        try
+        {
+            var httpSec = httpFactory.CreateClient("PrivateApi");
+            tiles = await httpSec.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
+        }
+        catch (AccessTokenNotAvailableException e)
+        {
+            e.Redirect();
+        }
     }
 
     protected void SelectedTile(TileDto tile)
