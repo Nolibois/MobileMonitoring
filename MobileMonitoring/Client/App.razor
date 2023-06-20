@@ -1,4 +1,15 @@
-﻿<CascadingAuthenticationState>
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@if (isAuthenticated)
+{
+      <p>Welcome @userName</p>
+}
+@if (!isAuthenticated)
+{
+      <p>Please log in!</p>
+}
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
@@ -19,3 +30,17 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code
+{
+    bool isAuthenticated = false;
+    string? userName;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        isAuthenticated = state.User.Identity.IsAuthenticated;
+        userName = state.User.Identity.Name;
+
+    }
+}

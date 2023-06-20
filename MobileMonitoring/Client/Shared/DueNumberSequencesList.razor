@@ -1,5 +1,8 @@
 ﻿@using MobileMonitoring.Shared;
-@inject HttpClient Http;
+
+@attribute [Authorize]
+
+@inject IHttpClientFactory httpFactory;
 
 
 <h3 class="h4">@TileName</h3>
@@ -50,7 +53,15 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        numberSequences = await Http.GetFromJsonAsync<IEnumerable<NumberSequenceDto>>("api/NumberSequences");
+        try
+        {
+            var httpSec = httpFactory.CreateClient("PrivateApi");
+            numberSequences = await httpSec.GetFromJsonAsync<IEnumerable<NumberSequenceDto>>("api/NumberSequences");
+        }
+        catch (AccessTokenNotAvailableException e)
+        {
+            e.Redirect();
+        }
 
         await base.OnParametersSetAsync();
     }

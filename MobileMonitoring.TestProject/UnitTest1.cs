@@ -1,35 +1,56 @@
 using Bunit;
 using MobileMonitoring.Client.Pages;
-using MobileMonitoring.Shared;
 
 
 namespace MobileMonitoring.TestProject
 {
     public class UnitTest1 : TestContext
-    {
-      //public UnitTest1()
-      //{
-      //  Services.AddHttpClient();
-      //}
+	{
+        
+        /// <summary>
+        /// Check counter init
+        /// </summary>
+		[Fact(DisplayName = "Check counter initilisation")]
+		public void IntitalCounterTextHTML()
+		{
+            var cut = RenderComponent<Counter>();
+            var expectedHtml = @"<h1>Counter</h1>
+                                  <p role=""status"">Current count: 0</p>
+                                  <button class=""btn btn-primary"">Click me</button>";
 
-    [Fact]
-        public void SelectModuleInSettings()
-        {
-      
-        // Arrange
-        var ctx = new TestContext();
-        var cut = ctx.RenderComponent<Settings>();
-        var paraElm = cut.Find("InputSelect");
-
-        // Act
-        cut.Find("button").Click();
-        //var paraElmText = paraElm.TextContent;
-
-        // Assert
-        paraElm.MarkupMatches("<InputNumber class=\"mb-2 form-control\" id=\"threshold\" placeholder=\"@tiles.FirstOrDefault(threshold => threshold.IdTile == Int32.Parse(selectedModule))?.Threshold\" @bind-Value=Notifications cleanup />");
-
-
-
+            cut.MarkupMatches(expectedHtml);
         }
-    }
+        
+        /// <summary>
+        /// Test click button once
+        /// </summary>
+        [Fact(DisplayName = "Click button increase the counter")]
+        public void IncreaseCounterOnce()
+        {
+            IRenderedFragment cut = RenderComponent<Counter>();
+
+            cut.Find("button").Click();
+
+            cut.GetChangesSinceFirstRender().ShouldHaveSingleTextChange("Current count: 1");
+        }
+
+        /// <summary>
+        /// Test click button twice
+        /// </summary>
+        [Fact(DisplayName = "Click button increase the counter a second time")]
+        public void IncreaseCounterTwice()
+        {
+            IRenderedFragment cut = RenderComponent<Counter>();
+
+            cut.Find("button").Click();
+
+            cut.GetChangesSinceFirstRender().ShouldHaveSingleTextChange("Current count: 1");
+
+            cut.Find("button").Click();
+
+            cut.GetChangesSinceFirstRender().ShouldHaveSingleTextChange("Current count: 2");
+        }
+
+
+	}
 }

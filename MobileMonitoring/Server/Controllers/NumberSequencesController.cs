@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MobileMonitoring.Shared;
@@ -6,7 +7,7 @@ using MobileMonitoring.Shared;
 namespace MobileMonitoring.Server.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize]
     public class NumberSequencesController : ControllerBase
     {
         /// <summary>

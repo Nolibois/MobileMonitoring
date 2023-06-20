@@ -6,7 +6,7 @@ using MobileMonitoring.Shared;
 namespace MobileMonitoring.Server.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize]
     public class ThresholdController : ControllerBase
     {
         /// <summary>

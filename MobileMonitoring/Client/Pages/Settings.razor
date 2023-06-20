@@ -2,9 +2,10 @@
 
 @using Microsoft.Extensions.Logging
 @using MobileMonitoring.Shared;
-@using System.Linq;
 
-@inject HttpClient Http;
+@attribute [Authorize];
+
+@inject IHttpClientFactory HttpFactory;
 @inject ILogger<Settings> Logger;
 @inject IJSRuntime JSRuntime;
 
@@ -76,11 +77,20 @@
     private IEnumerable<TileDto>? tiles = null;
     private Threshold threshold = new();
     private TileDto? tile = new();
-    private string? selectedModule;
+    [Parameter]
+    public string? selectedModule { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        tiles = await Http.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
+        try
+        {
+            var httpSec = HttpFactory.CreateClient("PrivateApi");
+            tiles = await httpSec.GetFromJsonAsync<IEnumerable<TileDto>>("api/Tiles");
+        }
+        catch(AccessTokenNotAvailableException e)
+        {
+            e.Redirect();
+        }
     }
 
 
@@ -94,19 +104,34 @@
             {
                 Id = Int32.Parse(selectedModule);
                 threshold.IdThreshold = Id;
-                var response = await Http.PutAsJsonAsync<Threshold>("api/Threshold/" + Id, threshold);
+
+                HttpResponseMessage response = new HttpResponseMessage();
+
+                try
+                {
+                    var httpSec = HttpFactory.CreateClient("PrivateApi");
+                    response = await httpSec.PutAsJsonAsync<Threshold>("api/Threshold/" + Id, threshold);
+                }
+                catch (AccessTokenNotAvailableException e)
+                {
+                    e.Redirect();
+                }
 
                 if (response.IsSuccessStatusCode)
                 {
-                    await JSRuntime.InvokeVoidAsync("alert", "The new threshold is " + threshold.ThresholdWarnings + ".");
-                    await updateAlertTile(Id);
+                    await Task.WhenAll(
+                        Task.Run(async () =>
+                        {
+                            await JSRuntime.InvokeVoidAsync("alert", "The new threshold is " + threshold.ThresholdWarnings + ".");
+                            await updateAlertTile(Id);
+                        })
+                    );
                 }
                 else
                 {
-                    throw new Exception($"Erreur lors de la mise à jour de la ressource : {response.ReasonPhrase}");
+                    throw new Exception($"Error when updating resource : {response.ReasonPhrase}");
                 }
             }
-
         }
         catch(Exception ex)
         {
@@ -123,7 +148,17 @@
         {
             if (tile != null)
             {
-                var responseAlertTile = await Http.PutAsJsonAsync<TileDto>("api/Tiles/" + tileId, tile);
+                HttpResponseMessage responseAlertTile = new HttpResponseMessage();
+
+                try
+                {
+                    var httpSec = HttpFactory.CreateClient("PrivateApi");
+                    responseAlertTile = await httpSec.PutAsJsonAsync<TileDto>("api/Tiles/" + tileId, tile);
+                }
+                catch (AccessTokenNotAvailableException e)
+                {
+                    e.Redirect();
+                }
 
                 if (responseAlertTile.IsSuccessStatusCode)
                 {
@@ -131,7 +166,7 @@
                 }
                 else
                 {
-                    throw new Exception($"Erreur lors de la mise à jour de la ressource : {responseAlertTile.ReasonPhrase}");
+                    throw new Exception($"Error when updating resource : {responseAlertTile.ReasonPhrase}");
                 }
                
             }
