@@ -14,7 +14,9 @@ namespace MobileMonitoring.Server.Controllers
         /// </summary>
         /// <param name="monitCont"></param>
         /// <returns>List of email status</returns>
+        /// <response code="400">If the items are null</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IEnumerable<EmailStatus> Get([FromServices] MonitoringContext monitCont) => monitCont.EmailStatuses;
     }
 }

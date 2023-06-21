@@ -15,7 +15,9 @@ namespace MobileMonitoring.Server.Controllers
         /// </summary>
         /// <param name="monitCont"></param>
         /// <returns>List of cleanups with details and user Fullname</returns>
+        /// <response code="400">If the items are null</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IEnumerable<CleanupDto> Get([FromServices] MonitoringContext monitCont) => 
             monitCont.Cleanups
                 .Include(cleanup => cleanup.User)
@@ -30,8 +32,10 @@ namespace MobileMonitoring.Server.Controllers
         /// <param name="monitCont"></param>
         /// <param name="id"></param>
         /// <returns>List of cleanups filtered wtih tile Id</returns>
+        /// <response code="400">If the item is null</response>
         [HttpGet("{id}")]
-        public IEnumerable<CleanupDto> Get([FromServices] MonitoringContext monitCont, int id) =>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IEnumerable<CleanupDto> GetById([FromServices] MonitoringContext monitCont, int id) =>
             monitCont.Cleanups
                 .Include(cleanup => cleanup.User)
                 .Include(cleanup => cleanup.User.Company)

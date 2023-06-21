@@ -15,7 +15,9 @@ namespace MobileMonitoring.Server.Controllers
         /// </summary>
         /// <param name="monitCont"></param>
         /// <returns>List of Number Sequences</returns>
+        /// <response code="400">If the items are null</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IEnumerable<NumberSequenceDto> Get([FromServices] MonitoringContext monitCont) => monitCont.NumberSequences
             .Include(numberSequence => numberSequence.Company)
             .Select(numberSequence => new NumberSequenceDto(numberSequence))

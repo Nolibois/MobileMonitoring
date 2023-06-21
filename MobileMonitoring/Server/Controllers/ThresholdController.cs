@@ -14,7 +14,9 @@ namespace MobileMonitoring.Server.Controllers
         /// </summary>
         /// <param name="monitCont"></param>
         /// <returns>List of Thresholds</returns>
+        /// <response code="400">If the items are null</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IEnumerable<Threshold> Get([FromServices] MonitoringContext monitCont) => monitCont.Threshold;
 
         /// <summary>
@@ -24,7 +26,11 @@ namespace MobileMonitoring.Server.Controllers
         /// <param name="updatedThreshold"></param>
         /// <param name="monitCont"></param>
         /// <returns></returns>
+        /// <response code="201">Returns the newly updated item</response>
+        /// <response code="400">If the items are null</response>
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Update(int id, [FromBody] Threshold updatedThreshold, [FromServices] MonitoringContext monitCont)
         {
             var threshold = await monitCont.Threshold.FirstOrDefaultAsync(t => t.IdThreshold == id);

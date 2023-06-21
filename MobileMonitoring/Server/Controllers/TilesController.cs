@@ -8,6 +8,7 @@ namespace MobileMonitoring.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController, Authorize]
+    [Produces("application/json")]
     public class TilesController : ControllerBase
     {
         /// <summary>
@@ -15,7 +16,9 @@ namespace MobileMonitoring.Server.Controllers
         /// </summary>
         /// <param name="monitCont"></param>
         /// <returns>List of tiles with module dynamics name</returns>
+        /// <response code="400">If the items are null</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IEnumerable<TileDto> Get([FromServices] MonitoringContext monitCont) => 
             monitCont.Tiles
                 .Include(tile => tile.ModuleDynamics)
@@ -28,7 +31,9 @@ namespace MobileMonitoring.Server.Controllers
         /// <param name="id"></param>
         /// <param name="monitCont"></param>
         /// <returns></returns>
+        /// <response code="400">If the item is null</response>
         [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<TileDto> GetById(int id, [FromServices] MonitoringContext monitCont)
         {
             var tileById = await monitCont.Tiles
@@ -62,7 +67,11 @@ namespace MobileMonitoring.Server.Controllers
         /// <param name="updateAlert"></param>
         /// <param name="monitCont"></param>
         /// <returns></returns>
+        /// <response code="201">Returns the newly updated item</response>
+        /// <response code="400">If the items are null</response>
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateAlert(int id, [FromBody] TileDto updateAlert, [FromServices] MonitoringContext monitCont)
         {
             var tile = await monitCont.Tiles
@@ -103,6 +112,6 @@ namespace MobileMonitoring.Server.Controllers
             return Ok(tile);
         }
 
-        private bool AlertExists(int id, [FromServices] MonitoringContext monitCont) => monitCont.Tiles.Any(tile => tile.IdTile == id);
+        private static bool AlertExists(int id, [FromServices] MonitoringContext monitCont) => monitCont.Tiles.Any(tile => tile.IdTile == id);
     }
 }
