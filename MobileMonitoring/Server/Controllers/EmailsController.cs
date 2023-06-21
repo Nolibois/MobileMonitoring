@@ -15,7 +15,9 @@ namespace MobileMonitoring.Server.Controllers
         /// </summary>
         /// <param name="monitCont"></param>
         /// <returns>List of Emails with details and user sender and receiver fullname</returns>
+        /// <response code="400">If the items are null</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IEnumerable<EmailDto> Get([FromServices] MonitoringContext monitCont) => 
             monitCont.Emails
                 .Include(email => email.UserSender)
