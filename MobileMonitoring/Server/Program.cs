@@ -15,7 +15,7 @@ builder.Services
         options.Authority = builder.Configuration["Auth0:Domain"];
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidAudience = builder.Configuration["Auth0:Audience"],
+            ValidAudience = builder.Configuration["Auth0:audience"],
             ValidIssuer = $"https://{builder.Configuration["Auth0:Domain"]}"
         };
     });
