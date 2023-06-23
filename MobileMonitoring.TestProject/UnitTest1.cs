@@ -1,148 +1,56 @@
 using Bunit;
-using Microsoft.AspNetCore.Components;
 using MobileMonitoring.Client.Pages;
-using MobileMonitoring.Shared;
 
 
 namespace MobileMonitoring.TestProject
 {
     public class UnitTest1 : TestContext
 	{
+        
         /// <summary>
-        /// Usual Case: Matches component Tile
+        /// Check counter init
         /// </summary>
-        [Fact]
-        public void RenderUsualTileDto()
-        {
-            //Arrange
-            var counter = 0;
-            TileDto tile = new (
-                1, "Notifications cleanup", 15, "System administration", 6, true
-            );
+		[Fact(DisplayName = "Check counter initilisation")]
+		public void IntitalCounterTextHTML()
+		{
+            var cut = RenderComponent<Counter>();
+            var expectedHtml = @"<h1>Counter</h1>
+                                  <p role=""status"">Current count: 0</p>
+                                  <button class=""btn btn-primary"">Click me</button>";
 
-            //Act
-            var cut = RenderComponent<Client.Shared.Tile>(parameters => parameters
-             .Add(p => p.Data, tile)
-             .Add(p => p.OnClick, () => counter++)
-            );
-
-            //Assert
-            cut.MarkupMatches("""
-                <button class="nav-link card content-box rounded-0 m-3 text-bg-primary">
-                    <div class="card-body">
-                        <p class="card-text">15K</p>
-                    </div>
-                    <div class="card-footer border-0">Notifications cleanup</div>
-                    <div class="border-box"></div>
-                </button>
-            """);
+            cut.MarkupMatches(expectedHtml);
         }
-
+        
         /// <summary>
-        /// Extreme case: If Number is null
+        /// Test click button once
         /// </summary>
-        [Fact]
-        public void RenderNumberTileDto()
+        [Fact(DisplayName = "Click button increase the counter")]
+        public void IncreaseCounterOnce()
         {
-            //Arrange
-            var counter = 0;
-            TileDto tile = new(
-                1, "Notifications cleanup", null, "System administration", 6, true
-            );
+            IRenderedFragment cut = RenderComponent<Counter>();
 
-            //Act
-            var cut = RenderComponent<Client.Shared.Tile>(parameters => parameters
-             .Add(p => p.Data, tile)
-             .Add(p => p.OnClick, () => counter++)
-            );
-
-            //Assert
-            cut.MarkupMatches("""
-                <button class="nav-link card content-box rounded-0 m-3 text-bg-primary">
-                    <div class="card-body">
-                        <p class="card-text">N/A</p>
-                    </div>
-                    <div class="card-footer border-0">Notifications cleanup</div>
-                    <div class="border-box"></div>
-                </button>
-            """);
-        }
-
-        /// <summary>
-        /// Error Case: If Tile is null => 
-        /// Number : N/A
-        /// Name: ""
-        /// Button Class: "text-bg-danger"
-        /// </summary>
-        [Fact]
-        public void RenderNullTileThrowsException()
-        {
-            //Arrange
-            var counter = 0;
-
-            //Act
-            var act = () => RenderComponent<Client.Shared.Tile>(parameters => parameters
-             .Add(p => p.Data, null)
-             .Add(p => p.OnClick, () => counter++)
-            );
-
-            //Assert
-            Assert.Throws<ArgumentNullException>(act);
-        }
-
-        /// <summary>
-        /// Usual case: Event called xhen button pressed
-        /// </summary>
-        [Fact]
-        public void OnClickCalledWhenUserClick()
-        {
-            //Arrange
-            var counter = 0;
-            TileDto tile = new(
-                1, "Notifications cleanup", 15, "System administration", 6, true
-            );
-
-            //Act
-            var cut = RenderComponent<Client.Shared.Tile>(parameters => parameters
-             .Add(p => p.Data, tile)
-             .Add(p => p.OnClick, () => counter++)
-            );
-            
             cut.Find("button").Click();
 
-            //Assert
-            Assert.Equal(1, counter);
+            cut.GetChangesSinceFirstRender().ShouldHaveSingleTextChange("Current count: 1");
         }
 
         /// <summary>
-        /// Extreme case
+        /// Test click button twice
         /// </summary>
-        [Fact]
-        public void DefaultOnClickDoesNothing()
+        [Fact(DisplayName = "Click button increase the counter a second time")]
+        public void IncreaseCounterTwice()
         {
-            
+            IRenderedFragment cut = RenderComponent<Counter>();
+
+            cut.Find("button").Click();
+
+            cut.GetChangesSinceFirstRender().ShouldHaveSingleTextChange("Current count: 1");
+
+            cut.Find("button").Click();
+
+            cut.GetChangesSinceFirstRender().ShouldHaveSingleTextChange("Current count: 2");
         }
 
-        /// <summary>
-        /// Error Case
-        /// </summary>        
-        [Fact]
-        public void NullOnClickThrowsException()
-        {
-            //Arrange
-            TileDto tile = new(
-                1, "Notifications cleanup", 15, "System administration", 6, true
-            );
 
-            //Act
-            var act = () => RenderComponent<Client.Shared.Tile>(parameters => parameters
-             .Add(p => p.Data, tile)
-             .Add(p => p.OnClick, null)
-            );
-
-            //Assert
-            Assert.Throws<ArgumentNullException>(act);
-        }
-
-    }
+	}
 }

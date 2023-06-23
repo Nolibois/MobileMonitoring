@@ -3,9 +3,7 @@
 
 @attribute [Authorize]
 
-@inject HttpClient http;
 @inject IHttpClientFactory httpFactory;
-@inject NavigationManager nav;
 
 <PageTitle>Dashboard Monitoring</PageTitle>
 
@@ -27,7 +25,25 @@
     {
         @foreach(TileDto tile in tiles)
         {
-            <Tile Data=tile OnClick= "() => GoToModule(tile)"/>
+            <NavLink class="nav-link" href="@module" style="width: max-content;">
+                <button 
+                    @onclick="@(e => SelectedModule(tile))" 
+                    class="card content-box text-bg-@tile.LimitKpiTile() rounded-0 m-3">
+                    <div class="card-body">
+                        <p class="card-text">@if (tile.Number != null)
+                            {
+                                @(tile.Number + "K");
+                            }
+                            else
+                            {
+                                @("N/A");
+                            }
+                        </p>
+                    </div>
+                    <div class="card-footer border-0">@tile.Name</div>
+                    <div class="border-box"></div>
+                </button>
+            </NavLink>
         }
     }
 </div>
@@ -35,6 +51,7 @@
 @code
 {
     private IEnumerable<TileDto>? tiles = null;
+    private string module = "/";
 
     protected override async Task OnInitializedAsync()
     {
@@ -49,9 +66,8 @@
         }
     }
 
-    protected void GoToModule(TileDto tile)
+    protected void SelectedModule(TileDto tile)
     {
-        nav.NavigateTo(tile.ModuleDynamics.Replace(" ", ""));
+        module = tile.ModuleDynamics.Replace(" ", "");
     }
-
 }
