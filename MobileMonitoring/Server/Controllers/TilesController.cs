@@ -41,12 +41,12 @@ namespace MobileMonitoring.Server.Controllers
                 .Include(tile => tile.Threshold)
                 .Select(tile => new TileDto()
                 {
-                    IdTile= tile.IdTile,
-                    Name = tile.Name,
-                    Number= tile.Number,
-                    Alert= tile.Alert,
-                    ModuleDynamics = tile.ModuleDynamics.Name,
-                    Threshold = tile.Threshold.ThresholdWarnings
+                    IdTile          = tile.IdTile,
+                    Name            = tile.Name,
+                    Number          = tile.Number,
+                    Alert           = tile.Alert,
+                    ModuleDynamics  = tile.ModuleDynamics.Name,
+                    Threshold       = tile.Threshold.ThresholdWarnings
                 })
                 .FirstOrDefaultAsync(tile => tile.IdTile == id);
 

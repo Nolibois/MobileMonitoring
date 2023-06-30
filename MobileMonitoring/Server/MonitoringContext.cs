@@ -6,10 +6,6 @@ namespace MobileMonitoring.Server
 {
     public class MonitoringContext :DbContext
     {
-        /*public MonitoringContext(DbContextOptions<MonitoringContext> options) : base(options)
-        {
-
-        }*/
 
         public MonitoringContext([JsonProperty("options")] DbContextOptions<MonitoringContext> options) : base(options) { }
 
@@ -207,47 +203,47 @@ namespace MobileMonitoring.Server
             modelBuilder.Entity<Tile>().ToTable("Tiles").HasData(
                 new Tile()
                 {
-                    IdTile = 1,
-                    Name = "Notifications cleanup",
-                    Number = 15,
-                    Alert = false,
-                    ModuleDynamicsId = 1,
-                    ThresholdId = 1
+                    IdTile              = 1,
+                    Name                = "Notifications cleanup",
+                    Number              = 15,
+                    Alert               = false,
+                    ModuleDynamicsId    = 1,
+                    ThresholdId         = 1
                 },
                 new Tile()
                 {
-                    IdTile = 2,
-                    Name = "Cleanup batch history custom",
-                    Number = 25,
-                    Alert = false,
-                    ModuleDynamicsId = 1,
-                    ThresholdId = 2
+                    IdTile              = 2,
+                    Name                = "Cleanup batch history custom",
+                    Number              = 25,
+                    Alert               = false,
+                    ModuleDynamicsId    = 1,
+                    ThresholdId         = 2
                 },
                 new Tile()
                 {
-                    IdTile = 3,
-                    Name = "Database cleanup",
-                    Number = 89,
-                    Alert = false,
-                    ModuleDynamicsId = 1,
-                    ThresholdId = 3
+                    IdTile              = 3,
+                    Name                = "Database cleanup",
+                    Number              = 89,
+                    Alert               = false,
+                    ModuleDynamicsId    = 1,
+                    ThresholdId         = 3
                 },
                 new Tile()
                 {
-                    IdTile = 4,
-                    Name = "Unsent emails",
-                    Number = 75,
-                    Alert = false,
-                    ModuleDynamicsId = 2,
-                    ThresholdId = 4
+                    IdTile              = 4,
+                    Name                = "Unsent emails",
+                    Number              = 75,
+                    Alert               = false,
+                    ModuleDynamicsId    = 2,
+                    ThresholdId         = 4
                 },
                 new Tile()
                 {
-                    IdTile = 5,
-                    Name = "Due number sequences",
-                    Alert = false,
-                    ModuleDynamicsId = 3,
-                    ThresholdId = 5
+                    IdTile              = 5,
+                    Name                = "Due number sequences",
+                    Alert               = false,
+                    ModuleDynamicsId    = 3,
+                    ThresholdId         = 5
                 }
             );
 
