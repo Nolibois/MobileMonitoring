@@ -39,24 +39,24 @@ namespace MobileMonitoring.Server
             modelBuilder.Entity<User>().ToTable("Users").HasData(
                 new User()
                 {
-                    IdUser = 1,
-                    FullName = "Gwendoline Pimprenelle",
-                    DynamicsId = 6452154,
-                    CompanyId = 1
+                    IdUser      = 1,
+                    FullName    = "Gwendoline Pimprenelle",
+                    DynamicsId  = 6452154,
+                    CompanyId   = 1
                 },
                 new User()
                 {
-                    IdUser = 2,
-                    FullName = "Pablo De La Rosa",
-                    DynamicsId = 2156485,
-                    CompanyId = 1
+                    IdUser      = 2,
+                    FullName    = "Pablo De La Rosa",
+                    DynamicsId  = 2156485,
+                    CompanyId   = 1
                 },
                 new User()
                 {
-                    IdUser = 3,
-                    FullName = "Bob the sponge",
-                    DynamicsId = 9876543,
-                    CompanyId = 3
+                    IdUser      = 3,
+                    FullName    = "Bob the sponge",
+                    DynamicsId  = 9876543,
+                    CompanyId   = 3
                 }
             );
 
@@ -82,30 +82,30 @@ namespace MobileMonitoring.Server
             modelBuilder.Entity<Email>().ToTable("Emails").HasData(
                 new Email()
                 {
-                    IdEmail = 1,
-                    CreationDate = DateTime.Now,
-                    Subject = "Review task KJB000012",
-                    UserSenderId = 1,
-                    UserReceiverId = 2,
-                    EmailStatusId = 1,
+                    IdEmail         = 1,
+                    CreationDate    = DateTime.Now,
+                    Subject         = "Review task KJB000012",
+                    UserSenderId    = 1,
+                    UserReceiverId  = 2,
+                    EmailStatusId   = 1,
                 },
                 new Email()
                 {
-                    IdEmail = 2,
-                    CreationDate = new DateTime(2018, 12, 27, 8, 0, 0),
-                    Subject = "FR:Review task KJB000012",
-                    UserSenderId = 2,
-                    UserReceiverId = 1,
-                    EmailStatusId = 2,
+                    IdEmail         = 2,
+                    CreationDate    = new DateTime(2018, 12, 27, 8, 0, 0),
+                    Subject         = "FR:Review task KJB000012",
+                    UserSenderId    = 2,
+                    UserReceiverId  = 1,
+                    EmailStatusId   = 2,
                 },
                 new Email()
                 {
-                    IdEmail = 3,
-                    CreationDate = new DateTime(2019, 2, 17, 20, 15, 43),
-                    Subject = "What's taht Task KJB000012 ??",
-                    UserSenderId = 1,
-                    UserReceiverId = 3,
-                    EmailStatusId = 3,
+                    IdEmail         = 3,
+                    CreationDate    = new DateTime(2019, 2, 17, 20, 15, 43),
+                    Subject         = "What's taht Task KJB000012 ??",
+                    UserSenderId    = 1,
+                    UserReceiverId  = 3,
+                    EmailStatusId   = 3,
                 }
             );
 
@@ -144,30 +144,30 @@ namespace MobileMonitoring.Server
             modelBuilder.Entity<Cleanup>().ToTable("Cleanups").HasData(
                 new Cleanup()
                 {
-                    IdCleanup = 00001,
-                    CleanupDate = new DateTime(2022, 10, 5, 11, 24, 15),
-                    AlertCreationDate = new DateTime(2015, 8, 4, 0, 56, 0),
-                    UserId = 1,
-                    TileId = 1,
-                    AlertTypeId = 1
+                    IdCleanup           = 00001,
+                    CleanupDate         = new DateTime(2022, 10, 5, 11, 24, 15),
+                    AlertCreationDate   = new DateTime(2015, 8, 4, 0, 56, 0),
+                    UserId              = 1,
+                    TileId              = 1,
+                    AlertTypeId         = 1
                 },
                 new Cleanup()
                 {
-                    IdCleanup = 00002,
-                    CleanupDate = new DateTime(2021, 4, 14, 1, 12, 0),
-                    AlertCreationDate = new DateTime(2014, 3, 28, 9, 42, 0),
-                    UserId = 2,
-                    TileId = 2,
-                    AlertTypeId = 2
+                    IdCleanup           = 00002,
+                    CleanupDate         = new DateTime(2021, 4, 14, 1, 12, 0),
+                    AlertCreationDate   = new DateTime(2014, 3, 28, 9, 42, 0),
+                    UserId              = 2,
+                    TileId              = 2,
+                    AlertTypeId         = 2
                 },
                 new Cleanup()
                 {
-                    IdCleanup = 00003,
-                    CleanupDate = new DateTime(2023, 12, 31, 11, 55, 15),
-                    AlertCreationDate = new DateTime(2017, 6, 7, 12, 56, 0),
-                    UserId = 3,
-                    TileId = 3,
-                    AlertTypeId = 3
+                    IdCleanup           = 00003,
+                    CleanupDate         = new DateTime(2023, 12, 31, 11, 55, 15),
+                    AlertCreationDate   = new DateTime(2017, 6, 7, 12, 56, 0),
+                    UserId              = 3,
+                    TileId              = 3,
+                    AlertTypeId         = 3
                 }
             );
             modelBuilder.Entity<Cleanup>()
@@ -274,35 +274,35 @@ namespace MobileMonitoring.Server
             modelBuilder.Entity<NumberSequence>().ToTable("NumberSequences").HasData(
                 new NumberSequence()
                 {
-                    IdNumberSequence = 1,
-                    NbSequence = "DAT-0000001",
-                    InUse = false,
-                    Remaining = 100,
-                    CompanyId = 2
+                    IdNumberSequence    = 1,
+                    NbSequence          = "DAT-0000001",
+                    InUse               = false,
+                    Remaining           = 100,
+                    CompanyId           = 2
                 },
                 new NumberSequence()
                 {
-                    IdNumberSequence = 2,
-                    NbSequence = "DAT-4585654",
-                    InUse = true,
-                    Remaining = 51,
-                    CompanyId = 2
+                    IdNumberSequence    = 2,
+                    NbSequence          = "DAT-4585654",
+                    InUse               = true,
+                    Remaining           = 51,
+                    CompanyId           = 2
                 },
                 new NumberSequence()
                 {
-                    IdNumberSequence = 3,
-                    NbSequence = "FRSI-74023465",
-                    InUse = true,
-                    Remaining = 75,
-                    CompanyId = 1
+                    IdNumberSequence    = 3,
+                    NbSequence          = "FRSI-74023465",
+                    InUse               = true,
+                    Remaining           = 75,
+                    CompanyId           = 1
                 },
                 new NumberSequence()
                 {
-                    IdNumberSequence = 4,
-                    NbSequence = "USMF-8249758",
-                    InUse = true,
-                    Remaining = 8,
-                    CompanyId = 3
+                    IdNumberSequence    = 4,
+                    NbSequence          = "USMF-8249758",
+                    InUse               = true,
+                    Remaining           = 8,
+                    CompanyId           = 3
                 }
             );
             
