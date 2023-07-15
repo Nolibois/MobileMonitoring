@@ -69,7 +69,7 @@ namespace MobileMonitoring.TestProject
         }
 
         /// <summary>
-        /// Error Case: If Tile is null => 
+        /// Error Case: If Tile is null => throws Exceptiion
         /// Number : N/A
         /// Name: ""
         /// Button Class: "text-bg-danger"
@@ -115,16 +115,13 @@ namespace MobileMonitoring.TestProject
         }
 
         /// <summary>
-        /// Extreme case
+        /// Extreme case: Default onclick does nothing
         /// </summary>
         [Fact]
-        public void DefaultOnClickDoesNothing()
-        {
-            
-        }
+        public void DefaultOnClickDoesNothing() {}
 
         /// <summary>
-        /// Error Case
+        /// Error Case: If Onclick is null => throws Exceptiion
         /// </summary>        
         [Fact]
         public void NullOnClickThrowsException()
