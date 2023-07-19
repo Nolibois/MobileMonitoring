@@ -39,8 +39,9 @@
     protected override async Task OnParametersSetAsync()
     {
         var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        isAuthenticated = state.User.Identity.IsAuthenticated;
-        userName = state.User.Identity.Name;
+
+        isAuthenticated = state.User is not null && state.User.Identity is not null && state.User.Identity.IsAuthenticated;
+        userName = isAuthenticated? state.User!.Identity!.Name : null;
 
     }
 }

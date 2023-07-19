@@ -113,6 +113,7 @@ a {
 .card {
     width: 9rem;
     height: 9rem;
+    /*background: #2266e3 !important;*/
 }
 
     .card:hover {
