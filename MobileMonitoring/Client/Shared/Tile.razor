@@ -1,0 +1,53 @@
+﻿@using MobileMonitoring.Shared;
+
+<button class=@GetKpiLimitCssClass() @onclick=OnClick>
+    <div class="card-body">
+        <p class="card-text">@if (Data.Number != null)
+            {
+                @(Data.Number + "K");
+            }
+            else
+            {
+                @("N/A");
+            }
+        </p>
+    </div>
+    <div class="card-footer border-0">@Data.Name</div>
+    <div class="border-box"></div>
+</button>
+
+
+@code {
+    [Parameter, EditorRequired]
+    public required TileDto Data { get; set; }
+
+    [Parameter]
+    public Action OnClick { get; set; } = () => { };
+
+    /// <summary>
+    /// Check if parameters are not null
+    /// </summary>
+    /// <exception cref="ArgumentNullException"></exception>
+    protected override void OnParametersSet()
+    {
+        if (OnClick is null)
+        {
+            throw new ArgumentNullException("OnClick can not be null.");
+        }
+
+        if (Data is null)
+        {
+            throw new ArgumentNullException("Data can not be null.");
+        }
+        base.OnParametersSet();
+    }
+
+    /// <summary>
+    /// Get KPI limit
+    /// </summary>
+    /// <returns></returns>
+    protected string GetKpiLimitCssClass()
+    {
+        return $"nav-link card content-box rounded-0 m-3 text-bg-{Data.LimitKpiTile()}";
+    }
+}
