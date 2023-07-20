@@ -30,7 +30,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity detailed
+      run: dotnet test --no-build --verbosity normal
     - name: Set database parameters
       run: sed -i "s/<dbpwd>/${{ secrets.AZURE_SQL_PASSWORD }}/" ${{ env.PROJECT_FOLDER }}/appsettings.json
     - name: Install dotnet ef
