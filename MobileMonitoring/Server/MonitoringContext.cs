@@ -10,16 +10,17 @@ namespace MobileMonitoring.Server
         public MonitoringContext([JsonProperty("options")] DbContextOptions<MonitoringContext> options) : base(options) { }
 
 
-        public DbSet<Company>        Companies       { get; set; }
-        public DbSet<User>           Users           { get; set; }
-        public DbSet<EmailStatus>    EmailStatuses   { get; set; }
-        public DbSet<Email>          Emails          { get; set; }
-        public DbSet<AlertType>      AlertTypes      { get; set; }
-        public DbSet<Cleanup>        Cleanups        { get; set; }
-        public DbSet<ModuleDynamics> ModulesDynamics { get; set; }
-        public DbSet<Tile>           Tiles           { get; set; }
-        public DbSet<NumberSequence> NumberSequences { get; set; }
-        public DbSet<Threshold>      Threshold       { get; set; }
+        public DbSet<Company>           Companies       { get; set; }
+        public DbSet<User>              Users           { get; set; }
+        public DbSet<Handle>            Handles         { get; set; }
+        public DbSet<EmailStatus>       EmailStatuses   { get; set; }
+        public DbSet<Email>             Emails          { get; set; }
+        public DbSet<AlertType>         AlertTypes      { get; set; }
+        public DbSet<Cleanup>           Cleanups        { get; set; }
+        public DbSet<ModuleDynamics>    ModulesDynamics { get; set; }
+        public DbSet<Tile>              Tiles           { get; set; }
+        public DbSet<NumberSequence>    NumberSequences { get; set; }
+        public DbSet<Threshold>         Threshold       { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -170,10 +171,6 @@ namespace MobileMonitoring.Server
                     AlertTypeId         = 3
                 }
             );
-            modelBuilder.Entity<Cleanup>()
-                .HasOne(cleanup => cleanup.User)
-                .WithMany()
-                .HasForeignKey(cleanup => cleanup.UserId);
 
             modelBuilder.Entity<Cleanup>()
                 .HasOne(cleanup => cleanup.AlertType)
@@ -184,6 +181,23 @@ namespace MobileMonitoring.Server
                 .HasOne(cleanup => cleanup.Tile)
                 .WithMany()
                 .HasForeignKey(cleanup => cleanup.TileId);
+
+            /*
+             * Handles
+             */
+            modelBuilder.Entity<Handle>().ToTable("Handles").HasNoKey();
+            
+            modelBuilder.Entity<Handle>()
+                .HasOne(handle => handle.User)
+                .WithMany()
+                .HasForeignKey(handle => handle.IdUser)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Handle>()
+                .HasOne(Handle=> Handle.Cleanup)
+                .WithMany()
+                .HasForeignKey(Handle => Handle.IdCleanup)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             /*

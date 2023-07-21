@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MobileMonitoring.Server;
 
@@ -11,9 +12,11 @@ using MobileMonitoring.Server;
 namespace MobileMonitoring.Server.Migrations
 {
     [DbContext(typeof(MonitoringContext))]
-    partial class MonitoringContextModelSnapshot : ModelSnapshot
+    [Migration("20230720201511_removeIdUserRelationCleanup")]
+    partial class removeIdUserRelationCleanup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,7 +197,7 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdEmail = 1,
-                            CreationDate = new DateTime(2023, 7, 21, 16, 10, 35, 364, DateTimeKind.Local).AddTicks(3090),
+                            CreationDate = new DateTime(2023, 7, 20, 22, 15, 11, 6, DateTimeKind.Local).AddTicks(5072),
                             EmailStatusId = 1,
                             Subject = "Review task KJB000012",
                             UserReceiverId = 2,
