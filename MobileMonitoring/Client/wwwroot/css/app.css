@@ -117,12 +117,17 @@ a {
 .card {
     width: 9rem;
     height: 9rem;
-    /*background: #2266e3 !important;*/
 }
 
     .card:hover {
         border: inset 3px #6a9adee1 solid;
     }
+
+@media (max-width: 576px){
+    .container-cards {
+        padding: 0.2rem !important;
+    }
+}
 
 
 .content-box {
