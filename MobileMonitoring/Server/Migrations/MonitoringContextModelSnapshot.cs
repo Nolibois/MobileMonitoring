@@ -96,25 +96,124 @@ namespace MobileMonitoring.Server.Migrations
                             IdCleanup = 1,
                             AlertCreationDate = new DateTime(2015, 8, 4, 0, 56, 0, 0, DateTimeKind.Unspecified),
                             AlertTypeId = 1,
-                            CleanupDate = new DateTime(2022, 10, 5, 11, 24, 15, 0, DateTimeKind.Unspecified),
+                            CleanupDate = new DateTime(2024, 10, 5, 11, 24, 15, 0, DateTimeKind.Unspecified),
                             TileId = 1,
                             UserId = 1
                         },
                         new
                         {
                             IdCleanup = 2,
+                            AlertCreationDate = new DateTime(2018, 9, 3, 0, 56, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 1,
+                            CleanupDate = new DateTime(2023, 11, 8, 4, 10, 15, 0, DateTimeKind.Unspecified),
+                            TileId = 1,
+                            UserId = 6
+                        },
+                        new
+                        {
+                            IdCleanup = 3,
+                            AlertCreationDate = new DateTime(2019, 8, 28, 10, 56, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 1,
+                            CleanupDate = new DateTime(2024, 7, 2, 10, 24, 15, 0, DateTimeKind.Unspecified),
+                            TileId = 1,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            IdCleanup = 4,
+                            AlertCreationDate = new DateTime(2017, 10, 4, 0, 56, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 1,
+                            CleanupDate = new DateTime(2024, 4, 18, 11, 24, 15, 0, DateTimeKind.Unspecified),
+                            TileId = 1,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            IdCleanup = 5,
                             AlertCreationDate = new DateTime(2014, 3, 28, 9, 42, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 1,
+                            CleanupDate = new DateTime(2025, 5, 14, 1, 12, 0, 0, DateTimeKind.Unspecified),
+                            TileId = 1,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            IdCleanup = 6,
+                            AlertCreationDate = new DateTime(2019, 1, 2, 9, 42, 0, 0, DateTimeKind.Unspecified),
                             AlertTypeId = 2,
-                            CleanupDate = new DateTime(2021, 4, 14, 1, 12, 0, 0, DateTimeKind.Unspecified),
+                            CleanupDate = new DateTime(2026, 2, 28, 1, 12, 0, 0, DateTimeKind.Unspecified),
                             TileId = 2,
                             UserId = 2
                         },
                         new
                         {
-                            IdCleanup = 3,
+                            IdCleanup = 7,
+                            AlertCreationDate = new DateTime(2019, 10, 18, 9, 42, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 2,
+                            CleanupDate = new DateTime(2025, 11, 14, 1, 12, 0, 0, DateTimeKind.Unspecified),
+                            TileId = 2,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            IdCleanup = 8,
+                            AlertCreationDate = new DateTime(2017, 8, 31, 9, 42, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 2,
+                            CleanupDate = new DateTime(2024, 11, 21, 1, 12, 0, 0, DateTimeKind.Unspecified),
+                            TileId = 2,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            IdCleanup = 9,
+                            AlertCreationDate = new DateTime(2014, 7, 19, 9, 42, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 2,
+                            CleanupDate = new DateTime(2023, 11, 12, 1, 12, 0, 0, DateTimeKind.Unspecified),
+                            TileId = 2,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            IdCleanup = 10,
                             AlertCreationDate = new DateTime(2017, 6, 7, 12, 56, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 2,
+                            CleanupDate = new DateTime(2023, 12, 14, 11, 55, 15, 0, DateTimeKind.Unspecified),
+                            TileId = 2,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            IdCleanup = 11,
+                            AlertCreationDate = new DateTime(2017, 11, 17, 12, 56, 0, 0, DateTimeKind.Unspecified),
                             AlertTypeId = 3,
-                            CleanupDate = new DateTime(2023, 12, 31, 11, 55, 15, 0, DateTimeKind.Unspecified),
+                            CleanupDate = new DateTime(2024, 10, 8, 11, 55, 15, 0, DateTimeKind.Unspecified),
+                            TileId = 3,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            IdCleanup = 12,
+                            AlertCreationDate = new DateTime(2017, 11, 7, 12, 56, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 3,
+                            CleanupDate = new DateTime(2028, 9, 12, 11, 55, 15, 0, DateTimeKind.Unspecified),
+                            TileId = 3,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            IdCleanup = 13,
+                            AlertCreationDate = new DateTime(2016, 9, 27, 12, 56, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 3,
+                            CleanupDate = new DateTime(2024, 4, 2, 11, 55, 15, 0, DateTimeKind.Unspecified),
+                            TileId = 3,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            IdCleanup = 14,
+                            AlertCreationDate = new DateTime(2016, 12, 7, 12, 56, 0, 0, DateTimeKind.Unspecified),
+                            AlertTypeId = 3,
+                            CleanupDate = new DateTime(2026, 3, 22, 11, 55, 15, 0, DateTimeKind.Unspecified),
                             TileId = 3,
                             UserId = 3
                         });
@@ -194,8 +293,8 @@ namespace MobileMonitoring.Server.Migrations
                         new
                         {
                             IdEmail = 1,
-                            CreationDate = new DateTime(2023, 7, 21, 16, 10, 35, 364, DateTimeKind.Local).AddTicks(3090),
-                            EmailStatusId = 1,
+                            CreationDate = new DateTime(2023, 7, 24, 18, 9, 29, 837, DateTimeKind.Local).AddTicks(1808),
+                            EmailStatusId = 3,
                             Subject = "Review task KJB000012",
                             UserReceiverId = 2,
                             UserSenderId = 1
@@ -217,6 +316,33 @@ namespace MobileMonitoring.Server.Migrations
                             Subject = "What's taht Task KJB000012 ??",
                             UserReceiverId = 3,
                             UserSenderId = 1
+                        },
+                        new
+                        {
+                            IdEmail = 4,
+                            CreationDate = new DateTime(2022, 4, 21, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailStatusId = 3,
+                            Subject = "Account receiver",
+                            UserReceiverId = 2,
+                            UserSenderId = 6
+                        },
+                        new
+                        {
+                            IdEmail = 5,
+                            CreationDate = new DateTime(2018, 12, 27, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailStatusId = 3,
+                            Subject = "Account payable ",
+                            UserReceiverId = 4,
+                            UserSenderId = 2
+                        },
+                        new
+                        {
+                            IdEmail = 6,
+                            CreationDate = new DateTime(2019, 2, 17, 20, 15, 43, 0, DateTimeKind.Unspecified),
+                            EmailStatusId = 2,
+                            Subject = "Ledger General to review",
+                            UserReceiverId = 1,
+                            UserSenderId = 5
                         });
                 });
 
@@ -344,7 +470,7 @@ namespace MobileMonitoring.Server.Migrations
                             IdNumberSequence = 1,
                             CompanyId = 2,
                             InUse = false,
-                            NbSequence = "DAT-0000001",
+                            NbSequence = "DAT-PO-0000001",
                             Remaining = 100
                         },
                         new
@@ -352,7 +478,7 @@ namespace MobileMonitoring.Server.Migrations
                             IdNumberSequence = 2,
                             CompanyId = 2,
                             InUse = true,
-                            NbSequence = "DAT-4585654",
+                            NbSequence = "DAT-SO-4585654",
                             Remaining = 51
                         },
                         new
@@ -360,7 +486,7 @@ namespace MobileMonitoring.Server.Migrations
                             IdNumberSequence = 3,
                             CompanyId = 1,
                             InUse = true,
-                            NbSequence = "FRSI-74023465",
+                            NbSequence = "FRSI-PO-7402346",
                             Remaining = 75
                         },
                         new
@@ -368,8 +494,40 @@ namespace MobileMonitoring.Server.Migrations
                             IdNumberSequence = 4,
                             CompanyId = 3,
                             InUse = true,
-                            NbSequence = "USMF-8249758",
+                            NbSequence = "USMF-PO-8249758",
                             Remaining = 8
+                        },
+                        new
+                        {
+                            IdNumberSequence = 5,
+                            CompanyId = 2,
+                            InUse = true,
+                            NbSequence = "DAT-PS-0451257",
+                            Remaining = 45
+                        },
+                        new
+                        {
+                            IdNumberSequence = 6,
+                            CompanyId = 2,
+                            InUse = true,
+                            NbSequence = "FRSI-SO-0085654",
+                            Remaining = 1
+                        },
+                        new
+                        {
+                            IdNumberSequence = 7,
+                            CompanyId = 1,
+                            InUse = true,
+                            NbSequence = "FRSI-7402365",
+                            Remaining = 75
+                        },
+                        new
+                        {
+                            IdNumberSequence = 8,
+                            CompanyId = 3,
+                            InUse = true,
+                            NbSequence = "USMF-8249758",
+                            Remaining = 82
                         });
                 });
 
@@ -542,6 +700,27 @@ namespace MobileMonitoring.Server.Migrations
                             IdUser = 3,
                             CompanyId = 3,
                             DynamicsId = 9876543,
+                            FullName = "Bob the sponge"
+                        },
+                        new
+                        {
+                            IdUser = 4,
+                            CompanyId = 1,
+                            DynamicsId = 2156821,
+                            FullName = "Julie Lespine"
+                        },
+                        new
+                        {
+                            IdUser = 5,
+                            CompanyId = 2,
+                            DynamicsId = 7458962,
+                            FullName = "Yasmine Sbn Seddick"
+                        },
+                        new
+                        {
+                            IdUser = 6,
+                            CompanyId = 3,
+                            DynamicsId = 9877578,
                             FullName = "Bob the sponge"
                         });
                 });

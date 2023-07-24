@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MobileMonitoring.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDb : Migration
+    public partial class InitialDBv6 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -217,6 +217,27 @@ namespace MobileMonitoring.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Handles",
+                columns: table => new
+                {
+                    IdUser = table.Column<int>(type: "int", nullable: false),
+                    IdCleanup = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.ForeignKey(
+                        name: "FK_Handles_Cleanups_IdCleanup",
+                        column: x => x.IdCleanup,
+                        principalTable: "Cleanups",
+                        principalColumn: "IdCleanup");
+                    table.ForeignKey(
+                        name: "FK_Handles_Users_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "Users",
+                        principalColumn: "IdUser");
+                });
+
             migrationBuilder.InsertData(
                 table: "AlertTypes",
                 columns: new[] { "IdAlertType", "Name" },
@@ -275,10 +296,14 @@ namespace MobileMonitoring.Server.Migrations
                 columns: new[] { "IdNumberSequence", "CompanyId", "InUse", "NbSequence", "Remaining" },
                 values: new object[,]
                 {
-                    { 1, 2, false, "DAT-0000001", 100 },
-                    { 2, 2, true, "DAT-4585654", 51 },
-                    { 3, 1, true, "FRSI-74023465", 75 },
-                    { 4, 3, true, "USMF-8249758", 8 }
+                    { 1, 2, false, "DAT-PO-0000001", 100 },
+                    { 2, 2, true, "DAT-SO-4585654", 51 },
+                    { 3, 1, true, "FRSI-PO-7402346", 75 },
+                    { 4, 3, true, "USMF-PO-8249758", 8 },
+                    { 5, 2, true, "DAT-PS-0451257", 45 },
+                    { 6, 2, true, "FRSI-SO-0085654", 1 },
+                    { 7, 1, true, "FRSI-7402365", 75 },
+                    { 8, 3, true, "USMF-8249758", 82 }
                 });
 
             migrationBuilder.InsertData(
@@ -300,7 +325,10 @@ namespace MobileMonitoring.Server.Migrations
                 {
                     { 1, 1, 6452154, "Gwendoline Pimprenelle" },
                     { 2, 1, 2156485, "Pablo De La Rosa" },
-                    { 3, 3, 9876543, "Bob the sponge" }
+                    { 3, 3, 9876543, "Bob the sponge" },
+                    { 4, 1, 2156821, "Julie Lespine" },
+                    { 5, 2, 7458962, "Yasmine Sbn Seddick" },
+                    { 6, 3, 9877578, "Bob the sponge" }
                 });
 
             migrationBuilder.InsertData(
@@ -308,9 +336,20 @@ namespace MobileMonitoring.Server.Migrations
                 columns: new[] { "IdCleanup", "AlertCreationDate", "AlertTypeId", "CleanupDate", "TileId", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2015, 8, 4, 0, 56, 0, 0, DateTimeKind.Unspecified), 1, new DateTime(2022, 10, 5, 11, 24, 15, 0, DateTimeKind.Unspecified), 1, 1 },
-                    { 2, new DateTime(2014, 3, 28, 9, 42, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2021, 4, 14, 1, 12, 0, 0, DateTimeKind.Unspecified), 2, 2 },
-                    { 3, new DateTime(2017, 6, 7, 12, 56, 0, 0, DateTimeKind.Unspecified), 3, new DateTime(2023, 12, 31, 11, 55, 15, 0, DateTimeKind.Unspecified), 3, 3 }
+                    { 1, new DateTime(2015, 8, 4, 0, 56, 0, 0, DateTimeKind.Unspecified), 1, new DateTime(2024, 10, 5, 11, 24, 15, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 2, new DateTime(2018, 9, 3, 0, 56, 0, 0, DateTimeKind.Unspecified), 1, new DateTime(2023, 11, 8, 4, 10, 15, 0, DateTimeKind.Unspecified), 1, 6 },
+                    { 3, new DateTime(2019, 8, 28, 10, 56, 0, 0, DateTimeKind.Unspecified), 1, new DateTime(2024, 7, 2, 10, 24, 15, 0, DateTimeKind.Unspecified), 1, 4 },
+                    { 4, new DateTime(2017, 10, 4, 0, 56, 0, 0, DateTimeKind.Unspecified), 1, new DateTime(2024, 4, 18, 11, 24, 15, 0, DateTimeKind.Unspecified), 1, 2 },
+                    { 5, new DateTime(2014, 3, 28, 9, 42, 0, 0, DateTimeKind.Unspecified), 1, new DateTime(2025, 5, 14, 1, 12, 0, 0, DateTimeKind.Unspecified), 1, 2 },
+                    { 6, new DateTime(2019, 1, 2, 9, 42, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2026, 2, 28, 1, 12, 0, 0, DateTimeKind.Unspecified), 2, 2 },
+                    { 7, new DateTime(2019, 10, 18, 9, 42, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2025, 11, 14, 1, 12, 0, 0, DateTimeKind.Unspecified), 2, 4 },
+                    { 8, new DateTime(2017, 8, 31, 9, 42, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2024, 11, 21, 1, 12, 0, 0, DateTimeKind.Unspecified), 2, 3 },
+                    { 9, new DateTime(2014, 7, 19, 9, 42, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2023, 11, 12, 1, 12, 0, 0, DateTimeKind.Unspecified), 2, 2 },
+                    { 10, new DateTime(2017, 6, 7, 12, 56, 0, 0, DateTimeKind.Unspecified), 2, new DateTime(2023, 12, 14, 11, 55, 15, 0, DateTimeKind.Unspecified), 2, 3 },
+                    { 11, new DateTime(2017, 11, 17, 12, 56, 0, 0, DateTimeKind.Unspecified), 3, new DateTime(2024, 10, 8, 11, 55, 15, 0, DateTimeKind.Unspecified), 3, 4 },
+                    { 12, new DateTime(2017, 11, 7, 12, 56, 0, 0, DateTimeKind.Unspecified), 3, new DateTime(2028, 9, 12, 11, 55, 15, 0, DateTimeKind.Unspecified), 3, 2 },
+                    { 13, new DateTime(2016, 9, 27, 12, 56, 0, 0, DateTimeKind.Unspecified), 3, new DateTime(2024, 4, 2, 11, 55, 15, 0, DateTimeKind.Unspecified), 3, 1 },
+                    { 14, new DateTime(2016, 12, 7, 12, 56, 0, 0, DateTimeKind.Unspecified), 3, new DateTime(2026, 3, 22, 11, 55, 15, 0, DateTimeKind.Unspecified), 3, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -318,9 +357,12 @@ namespace MobileMonitoring.Server.Migrations
                 columns: new[] { "IdEmail", "CreationDate", "EmailStatusId", "Subject", "UserReceiverId", "UserSenderId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 5, 17, 14, 11, 52, 345, DateTimeKind.Local).AddTicks(8711), 1, "Review task KJB000012", 2, 1 },
+                    { 1, new DateTime(2023, 7, 24, 18, 9, 29, 837, DateTimeKind.Local).AddTicks(1808), 3, "Review task KJB000012", 2, 1 },
                     { 2, new DateTime(2018, 12, 27, 8, 0, 0, 0, DateTimeKind.Unspecified), 2, "FR:Review task KJB000012", 1, 2 },
-                    { 3, new DateTime(2019, 2, 17, 20, 15, 43, 0, DateTimeKind.Unspecified), 3, "What's taht Task KJB000012 ??", 3, 1 }
+                    { 3, new DateTime(2019, 2, 17, 20, 15, 43, 0, DateTimeKind.Unspecified), 3, "What's taht Task KJB000012 ??", 3, 1 },
+                    { 4, new DateTime(2022, 4, 21, 8, 0, 0, 0, DateTimeKind.Unspecified), 3, "Account receiver", 2, 6 },
+                    { 5, new DateTime(2018, 12, 27, 8, 0, 0, 0, DateTimeKind.Unspecified), 3, "Account payable ", 4, 2 },
+                    { 6, new DateTime(2019, 2, 17, 20, 15, 43, 0, DateTimeKind.Unspecified), 2, "Ledger General to review", 1, 5 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -354,6 +396,16 @@ namespace MobileMonitoring.Server.Migrations
                 column: "UserSenderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Handles_IdCleanup",
+                table: "Handles",
+                column: "IdCleanup");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Handles_IdUser",
+                table: "Handles",
+                column: "IdUser");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NumberSequences_CompanyId",
                 table: "NumberSequences",
                 column: "CompanyId");
@@ -378,22 +430,25 @@ namespace MobileMonitoring.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cleanups");
-
-            migrationBuilder.DropTable(
                 name: "Emails");
 
             migrationBuilder.DropTable(
+                name: "Handles");
+
+            migrationBuilder.DropTable(
                 name: "NumberSequences");
+
+            migrationBuilder.DropTable(
+                name: "EmailStatuses");
+
+            migrationBuilder.DropTable(
+                name: "Cleanups");
 
             migrationBuilder.DropTable(
                 name: "AlertTypes");
 
             migrationBuilder.DropTable(
                 name: "Tiles");
-
-            migrationBuilder.DropTable(
-                name: "EmailStatuses");
 
             migrationBuilder.DropTable(
                 name: "Users");
